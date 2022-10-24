@@ -1,10 +1,9 @@
 #include "blockchain.h"
-
-using std::string;
-using std::cout;
-using std::endl;
+#include "tester.h"
 
 int main(int argc, char const *argv[])
 {
+    test();
+
     return 0;
 }

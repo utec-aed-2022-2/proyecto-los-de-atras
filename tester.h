@@ -3,7 +3,11 @@
 #define TESTER_H
 #include "blockchain.h"
 
-void test1()
+using std::string;
+using std::cout;
+using std::endl;
+
+void test()
 {
     blockchain xd;
 
@@ -12,45 +16,20 @@ void test1()
     xd.addBlock();
     xd.addBlock();
 
-    std::cout << xd;
+    xd.setData(1, {"a", "b", 100, "x"});
+    xd.setData(3, {"a", "c", 200, "x"});
+    xd.setData(3, {"w", "a", 300, "x"});
+    xd.setData(4, {"z", "g", 5500, "x"});
+    xd.setData(1, {"a", "h", 200, "x"});
+    xd.setData(1, {"q", "j", 1200, "x"});
 
-    xd.setData(3, "Choqque Mejia, Fernando Adriano");
+    xd.minechain(3);
 
-    std::cout << xd;
+    xd.setData(3, {"w", "a", 3022220, "x"});
 
-    xd.setData(4, "Castro Padilla, Juan Diego");
+    xd.addBlock();
 
-    std::cout << xd;
-}
-
-void test2()
-{
-    blockchain xd;
-
-    xd.addBlock("Choqque Mejia, Fernando Adriano");
-    xd.addBlock("Castro Padilla, Juan Diego");
-    xd.addBlock("Flores Panduro, Carlos Alonso");
-    xd.addBlock("Izaguirre Zavaleta, Luis Fernando");
-
-    std::cout << xd;
-}
-
-void test3()
-{
-    blockchain xd;
-
-    xd.addBlock("Choqque Mejia, Fernando Adriano");
-    xd.addBlock("Castro Padilla, Juan Diego");
-    xd.addBlock("Flores Panduro, Carlos Alonso");
-    xd.addBlock("Izaguirre Zavaleta, Luis Fernando");
-
-    xd.setData(2, "Raza Estrada, Gilver Alexis");
-
-    std::cout << xd;
-
-    xd.minechain(2);
-
-    std::cout << xd;
+    cout << xd;
 }
 
 #endif
