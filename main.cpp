@@ -1,4 +1,3 @@
-#include "blockchain.h"
 #include "tester.h"
 
 int main(int argc, char const *argv[])
