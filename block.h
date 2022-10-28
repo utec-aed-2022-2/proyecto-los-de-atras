@@ -31,7 +31,7 @@ struct block
     {
         os << blck.id << std::endl;
         os << blck.nonce << std::endl;
-        for (size_t i = 0; i < blck.data.size() ; i++)
+        for (size_t i = 0; i < blck.data.size(); i++)
         {
             os << blck.data[i] << std::endl;
         }
