@@ -1,4 +1,4 @@
-#include "blockchain.h"
+#include "../classes/blockchain.h"
 #include <fstream>
 
 int main(int argc, char const *argv[])

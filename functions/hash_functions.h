@@ -7,7 +7,6 @@
         - creation of message schedule
         - compression
     */
-
 #pragma once
 #ifndef HASHFUNCTIONS_H
 #define HASHFUNCTIONS_H
@@ -15,7 +14,6 @@
 #include <cstring>
 #include <string>
 
-/****************************** declaration ******************************/
 class hash_functions
 {
 protected:
@@ -65,7 +63,6 @@ std::string sha256(std::string);
            | ((register_32) *((str) + 0) << 24);    \
 }
 
-/****************************** definition ******************************/
 const unsigned int hash_functions::hash_keys[64] =
 {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
@@ -94,18 +91,14 @@ void hash_functions::compress(const unsigned char *message, unsigned int block_n
     const unsigned char *sub_block;
     int m;
     int n;
-    for (m = 0; m < (int) block_nb; m++) {
+    for (m = 0; m < (int) block_nb; m++)
+    {
         sub_block = message + (m << 6);
-        for (n = 0; n < 16; n++) {
-            SHAF_PACK32(&sub_block[n << 2], &w[n]);
-        }
-        for (n = 16; n < 64; n++) {
-            w[n] =  SHAF_4(w[n -  2]) + w[n -  7] + SHAF_3(w[n - 15]) + w[n - 16];
-        }
-        for (n = 0; n < 8; n++) {
-            buffer[n] = s_r[n];
-        }
-        for (n = 0; n < 64; n++) {
+        for (n = 0; n < 16; n++) { SHAF_PACK32(&sub_block[n << 2], &w[n]); }
+        for (n = 16; n < 64; n++) { w[n] =  SHAF_4(w[n -  2]) + w[n -  7] + SHAF_3(w[n - 15]) + w[n - 16]; }
+        for (n = 0; n < 8; n++) { buffer[n] = s_r[n]; }
+        for (n = 0; n < 64; n++)
+        {
             t1 = buffer[7] + SHAF_2(buffer[4]) + CHOICE_OF(buffer[4], buffer[5], buffer[6]) + hash_keys[n] + w[n];
             t2 = SHAF_1(buffer[0]) + MAJORITY_OF(buffer[0], buffer[1], buffer[2]);
             buffer[7] = buffer[6];
@@ -117,9 +110,7 @@ void hash_functions::compress(const unsigned char *message, unsigned int block_n
             buffer[1] = buffer[0];
             buffer[0] = t1 + t2;
         }
-        for (n = 0; n < 8; n++) {
-            s_r[n] += buffer[n];
-        }
+        for (n = 0; n < 8; n++) { s_r[n] += buffer[n]; }
     }
 }
 
@@ -145,7 +136,8 @@ void hash_functions::adjust_digest(const unsigned char *text, unsigned int text_
     tmp_len = BLOCK_SIZE_of_256 - s_r_len;
     rem_len = text_len < tmp_len ? text_len : tmp_len;
     memcpy(&s_r_block[s_r_len], text, rem_len);
-    if (s_r_len + text_len < BLOCK_SIZE_of_256) {
+    if (s_r_len + text_len < BLOCK_SIZE_of_256)
+    {
         s_r_len += text_len;
         return;
     }
@@ -173,9 +165,7 @@ void hash_functions::digest_final(unsigned char *digest)
     s_r_block[s_r_len] = 0x80;
     SHAF_UNPACK32(len_b, s_r_block + pm_len - 4);
     compress(s_r_block, block_nb);
-    for (i = 0 ; i < 8; i++) {
-        SHAF_UNPACK32(s_r[i], &digest[i << 2]);
-    }
+    for (i = 0 ; i < 8; i++) { SHAF_UNPACK32(s_r[i], &digest[i << 2]); }
 }
 
 std::string sha256(std::string input)
@@ -190,9 +180,7 @@ std::string sha256(std::string input)
 
     char buf[2*hash_functions::PADD_SIZE+1];
     buf[2*hash_functions::PADD_SIZE] = 0;
-    for (int i = 0; i < hash_functions::PADD_SIZE; i++) {
-        sprintf(buf+i*2, "%02x", digest[i]);    
-    }
+    for (int i = 0; i < hash_functions::PADD_SIZE; i++) { sprintf(buf+i*2, "%02x", digest[i]); }
     return std::string(buf);
 }
 
