@@ -7,12 +7,12 @@ struct transaction
 {
     std::string string1;
     std::string string2;
-    std::uint64_t number;
+    float number;
     std::string date;
 
     transaction() = default;
     ~transaction() = default;
-    transaction(std::string string1, std::string string2, uint64_t number, std::string date): string1(string1), string2(string2), number(number), date(date) {}
+    transaction(std::string string1, std::string string2, float number, std::string date): string1(string1), string2(string2), number(number), date(date) {}
     transaction(const transaction &other): string1(other.string1), string2(other.string2), number(other.number), date(other.date) {}
     transaction& operator=(const transaction &other);
 
@@ -26,7 +26,7 @@ struct transaction
 
     std::string GetString1() const { return string1; }
     std::string GetString2() const { return string2; }
-    uint64_t GetNumber() const { return number; }
+    float GetNumber() const { return number; }
     std::string GetDate() const { return date; }
 };
 
