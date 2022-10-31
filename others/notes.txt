@@ -1,0 +1,30 @@
+idea 1:
+    1.1 que dentro de blockchain haya un hashmap y ya no un doublelist:
+        hashmap
+            keyA: A
+            keyB: B
+            keyC: C
+
+        - que A, B y C representen bloques y que cada bloque represente un usuario.
+        - dentro de cada bloque hay X transacciones, las cuales fueron hechan de distintas personas hacia 1 persona, por ej en el bloque B(la persona B) estan las transacciones:
+            M, 200, B
+            L, 29, B
+            O 345, B
+    1.2 en bloque, organizar las transacciones con un B+Tree. ej de uso:
+        - X persona es la que menos dinero le ha dado a B
+        - X persona es la que más dinero le ha dado a B
+        - X's personas le han dado un monto de dinero entre 30 y 200 a B 
+
+    - contras:
+        - voy a tener muchos B+tree (1 para cada usuario)
+        - como los bloques estan en un hashmap, no sabré que bloque es el anterior de otro (en un hashmap no hay orden)
+
+idea 2:
+    1.1 mantener el doublelist
+    1.2 lo mismo que en la idea 1 (parte 1.2)
+
+    - contras:
+        - al tener un doublelist, voy a tener que evaluar 1 por 1 para encontrar el bloque de X persona (con el hashmap es acceso directo)
+        - sigo teniendo muchos B+tree
+
+
