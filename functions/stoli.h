@@ -1,3 +1,6 @@
+#pragma once
+#ifndef STOLI_H
+#define STOLI_H
 #include <iostream>
 #include <cstring>
 #include <string>
@@ -9,3 +12,5 @@ long int stoli(const std::string &__str)
     for (int i = 0; i < __str.size(); i++) { returnn += stoi(__str.substr(i, 1)) * pow(10,9-i); }
     return returnn;
 }
+
+#endif

@@ -22,24 +22,25 @@ namespace nfbpt
 {
 template <typename T>
 struct node
-{
+{   
+    bool is_leaf;
     std::size_t maxchildren;
     std::size_t size;
-    T* item;
+    T* data;
     node<T>** children;
     node<T>* parent;
 
     node() = default;
     ~node() = default;
-    node(std::size_t maxchildren, node<T>* parent = nullptr): maxchildren(maxchildren), size(0)
+    node(std::size_t maxchildren, node<T>* parent = nullptr): is_leaf(false), maxchildren(maxchildren), size(0)
     {
 
-        T* _item = new T[maxchildren-1];
+        T* _data = new T[maxchildren-1];
         for(int i = 0; i < maxchildren-1; i++)
         {
-            _item[i] = T();
+            _data[i] = T();
         }
-        this->item = _item;
+        this->data = _data;
 
         node<T>** _children = new node<T>*[maxchildren];
         for(int i = 0; i < maxchildren; i++)
