@@ -21,15 +21,25 @@ void print(nfbpt::node<T>* cursor)
 
 int main(int argc, char const *argv[])
 {
-    bplustree<int> bpt(3);
-    bpt.insert(9);
-    bpt.insert(5);
-    bpt.insert(1);
-    bpt.insert(7);
-    bpt.insert(4);
-    bpt.insert(6);
+    bplustree<int> bpt1(3);
+    bpt1.insert(9);
+    bpt1.insert(5);
+    bpt1.insert(1);
+    bpt1.insert(7);
+    bpt1.insert(4);
+    bpt1.insert(6);
+    print(bpt1.GetRoot());
 
-    print(bpt.GetRoot());
+    std::cout << std::endl;
+    
+    bplustree<std::string> bpt2(3);
+    bpt2.insert("i");
+    bpt2.insert("e");
+    bpt2.insert("a");
+    bpt2.insert("g");
+    bpt2.insert("d");
+    bpt2.insert("f");
+    print(bpt2.GetRoot());
 
     return 0;
 }
