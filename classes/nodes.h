@@ -9,12 +9,12 @@ template<typename T>
 struct node
 {
     T data;
-    node<T>* next;
-    node<T>* prev;
+    nfdl::node<T>* next;
+    nfdl::node<T>* prev;
 
     node() = default;
     ~node() = default;
-    node(T data, node<T>* next = nullptr, node<T>* prev = nullptr): data(data), next(next), prev(prev) {}
+    node(T data, nfdl::node<T>* next = nullptr, nfdl::node<T>* prev = nullptr): data(data), next(next), prev(prev) {}
 };
 };
 
@@ -27,12 +27,12 @@ struct node
     std::size_t maxchildren;
     std::size_t size;
     T* data;
-    node<T>** children;
-    node<T>* parent;
+    nfbpt::node<T>** children;
+    nfbpt::node<T>* parent;
 
     node() = default;
     ~node() = default;
-    node(std::size_t maxchildren, node<T>* parent = nullptr): is_leaf(false), maxchildren(maxchildren), size(0)
+    node(std::size_t maxchildren): is_leaf(false), maxchildren(maxchildren), size(0), parent(nullptr)
     {
 
         T* _data = new T[maxchildren-1];
@@ -42,7 +42,7 @@ struct node
         }
         this->data = _data;
 
-        node<T>** _children = new node<T>*[maxchildren];
+        nfbpt::node<T>** _children = new nfbpt::node<T>*[maxchildren];
         for(int i = 0; i < maxchildren; i++)
         {
             _children[i] = nullptr;
