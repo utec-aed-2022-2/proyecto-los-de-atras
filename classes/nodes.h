@@ -52,4 +52,17 @@ struct node
 };
 };
 
+namespace nfht
+{
+template <typename K, typename V>
+struct node
+{
+	V value;
+	K key;
+    node() = default;
+    ~node() = default;
+	node(K key, V value): key(key), value(value) {}
+};
+};
+
 #endif
