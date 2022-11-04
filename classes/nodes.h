@@ -34,20 +34,8 @@ struct node
     ~node() = default;
     node(std::size_t maxchildren): is_leaf(false), maxchildren(maxchildren), size(0), parent(nullptr)
     {
-
-        T* _data = new T[maxchildren-1];
-        for(int i = 0; i < maxchildren-1; i++)
-        {
-            _data[i] = T();
-        }
-        this->data = _data;
-
-        nfbpt::node<T>** _children = new nfbpt::node<T>*[maxchildren];
-        for(int i = 0; i < maxchildren; i++)
-        {
-            _children[i] = nullptr;
-        }
-        this->children = _children;
+        this->data = new T[maxchildren-1];
+        this->children = new nfbpt::node<T>*[maxchildren];
     }
 };
 };

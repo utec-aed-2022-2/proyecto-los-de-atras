@@ -22,7 +22,32 @@ void print(nfbpt::node<T>* cursor)
     }
 }
 
-void test1()
+/*
+template<typename TK, typename TV>
+TV& hash_table<TK, TV>::operator[](TK key)
+{
+    if (fillFactor() >= maxFillFactor) { rehashing(); }
+    nfht::node<TK, TV> newNode;
+    newNode.key = key;
+    newNode.value = 0;
+    int index = hashFunction(key);
+
+    auto it0 = array[index].begin();
+    while (it0 != array[index].end())
+    {
+        if (it0->data.key == key)
+        {
+            return it0->data.key;
+        }
+    }
+    if (it0 == array[index].end())
+    {
+        array[index].push_front(newNode);
+        return array[index].begin()->data.key;
+    }
+}*/
+
+/*void test1()
 {
     blockchain xd;
 
@@ -69,7 +94,7 @@ void test3()
     for (int i = 0; i < b.size(); i++) { std::cout << b[i] << std::endl; }
 }
 
-/*int main3(int argc, char const *argv[])
+int main3(int argc, char const *argv[])
 {
     blockchain xd;
 
@@ -112,6 +137,22 @@ int main2(int argc, char const *argv[])
     return 0;
 }
 
+int main6(int argc, char const *argv[])
+{
+    double_list<int>* a;
+    a = new double_list<int>[4];
+
+    a[0].push_back(8);
+    a[0].push_back(7);
+    a[0].push_back(6);
+
+    for (int i = 0; i < a->size(); i++)
+    {
+        std::cout << a[0][i] << std::endl;
+    }
+
+    return 0;
+}
 
 int main1(int argc, char const *argv[])
 {

@@ -17,8 +17,7 @@ public:
     virtual void pop_back() = 0;
     virtual bool is_empty() const = 0;
     virtual void clear() = 0;
-    
-    // extra
+    //
     virtual void insert(T, int) = 0;
     virtual void remove(int) = 0;
     virtual T& operator[](int) = 0;
