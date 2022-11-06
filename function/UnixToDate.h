@@ -1,9 +1,9 @@
-#pragma once
 #ifndef UNIXTODATE_H
 #define UNIXTODATE_H
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <sstream>
 
 std::string unixTimeToHumanReadable(long int seconds)
 {

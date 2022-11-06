@@ -1,20 +1,10 @@
-    /*
-        SHA256: irreversible one-way hashing technique
-
-        parts:
-        - padding
-        - initial buffers
-        - creation of message schedule
-        - compression
-    */
-#pragma once
 #ifndef HASHFUNCTIONS_H
 #define HASHFUNCTIONS_H
 #include <iostream>
 #include <cstring>
 #include <string>
 
-class hash_functions
+class hashFunctions
 {
 protected:
     typedef unsigned char register_8;
@@ -63,7 +53,7 @@ std::string sha256(std::string);
            | ((register_32) *((str) + 0) << 24);    \
 }
 
-const unsigned int hash_functions::hash_keys[64] =
+const unsigned int hashFunctions::hash_keys[64] =
 {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
     0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -83,7 +73,7 @@ const unsigned int hash_functions::hash_keys[64] =
     0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-void hash_functions::compress(const unsigned char *message, unsigned int block_nb)
+void hashFunctions::compress(const unsigned char *message, unsigned int block_nb)
 {
     register_32 w[64];
     register_32 buffer[8];
@@ -114,7 +104,7 @@ void hash_functions::compress(const unsigned char *message, unsigned int block_n
     }
 }
 
-void hash_functions::stateregister()
+void hashFunctions::stateregister()
 {
     s_r[0] = 0x6a09e667;
     s_r[1] = 0xbb67ae85;
@@ -128,7 +118,7 @@ void hash_functions::stateregister()
     s_r_totlen = 0;
 }
 
-void hash_functions::adjust_digest(const unsigned char *text, unsigned int text_len)
+void hashFunctions::adjust_digest(const unsigned char *text, unsigned int text_len)
 {
     unsigned int block_nb;
     unsigned int new_len, rem_len, tmp_len;
@@ -152,7 +142,7 @@ void hash_functions::adjust_digest(const unsigned char *text, unsigned int text_
     s_r_totlen += (block_nb + 1) << 6;
 }
 
-void hash_functions::digest_final(unsigned char *digest)
+void hashFunctions::digest_final(unsigned char *digest)
 {
     unsigned int block_nb;
     unsigned int pm_len;
@@ -170,17 +160,17 @@ void hash_functions::digest_final(unsigned char *digest)
 
 std::string sha256(std::string input)
 {
-    unsigned char digest[hash_functions::PADD_SIZE];
-    memset(digest, 0, hash_functions::PADD_SIZE);
+    unsigned char digest[hashFunctions::PADD_SIZE];
+    memset(digest, 0, hashFunctions::PADD_SIZE);
 
-    hash_functions obj = hash_functions();
+    hashFunctions obj = hashFunctions();
     obj.stateregister();
     obj.adjust_digest((unsigned char*)input.c_str(), input.length());
     obj.digest_final(digest);
 
-    char buf[2*hash_functions::PADD_SIZE+1];
-    buf[2*hash_functions::PADD_SIZE] = 0;
-    for (int i = 0; i < hash_functions::PADD_SIZE; i++) { sprintf(buf+i*2, "%02x", digest[i]); }
+    char buf[2*hashFunctions::PADD_SIZE+1];
+    buf[2*hashFunctions::PADD_SIZE] = 0;
+    for (int i = 0; i < hashFunctions::PADD_SIZE; i++) { sprintf(buf+i*2, "%02x", digest[i]); }
     return std::string(buf);
 }
 
