@@ -13,9 +13,8 @@ struct block
     std::uint64_t id;
     std::uint64_t nonce;
     
-    BPlusTree<std::string> orderbyName;
-    BPlusTree<float> orderbyAmount;
-    BPlusTree<float> orderbyDate;
+    BPlusTree<transaction> orderbyAmount;
+    BPlusTree<transaction> orderbyDate;
 
     std::string prevHash{hashGenesis};
     std::string hash;

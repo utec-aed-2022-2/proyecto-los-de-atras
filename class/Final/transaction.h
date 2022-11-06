@@ -1,5 +1,6 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
+#include <type_traits>
 #include "../../function/UnixToDate.h"
 #include "../../function/StringToLong.h"
 
@@ -19,6 +20,10 @@ struct transaction
     friend std::ostream& operator<<(std::ostream& os, transaction& tx);
     bool operator==(transaction const& other);
     bool operator!=(transaction const& other);
+    template<typename T = float>
+    bool operator<(transaction const& other);
+    template<typename T = float>
+    bool operator>(transaction const& other);
     std::string GetString1() const;
     std::string GetString2() const;
     float GetNumber() const;
@@ -60,6 +65,41 @@ std::ostream& operator<<(std::ostream& os, transaction& tx)
 bool transaction::operator==(transaction const& other) { return string1 == other.string1 && string2 == other.string2 && number == other.number && date == other.date; }
 
 bool transaction::operator!=(transaction const& other) { return !(*this == other); }
+
+template<typename T>
+bool transaction::operator<(transaction const& other)
+{
+    if (std::is_same<T, float>::value)
+    {
+        if (number < other.number) { return true; }
+        else if (other.number == number) { if (date < other.date) { return true; } }
+        return false;
+    }
+    else if (std::is_same<T, std::string>::value)
+    {
+        if (date < other.date) { return true; }
+        else if (other.date == date) { if (number < other.number) { return true; } }
+        return false;
+    }
+}
+
+template<typename T>
+bool transaction::operator>(transaction const& other)
+{
+    if (std::is_same<T, float>::value)
+    {
+        if (other.number < number) { return true; }
+        else if (number == other.number) { if (other.date < date) { return true; } }
+        return false;
+    }
+    else if (std::is_same<T, std::string>::value)
+    {
+        if (other.date < date) { return true; }
+        else if (date == other.date) { if (other.number < number) { return true; } }
+        return false;
+    }
+    return false;
+}
 
 std::string transaction::GetString1() const { return string1; }
 

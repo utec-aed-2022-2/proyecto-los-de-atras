@@ -1,8 +1,34 @@
 #include "../class/hashMap.h"
 #include "../class/BPlusTree.h"
-#include "../class/Partial/BlockChain.h"
+//#include "../class/Partial/BlockChain.h"
+//#include "../class/Final/BlockChain.h"
+#include "../function/BoyerMoore.h"
 
 /*
+void bpt_print(){
+    print(this->root);
+}
+
+void print(nodeBPlus<T>* cursor)
+{
+    if (cursor != nullptr)
+    {
+        for (int i = 0; i < cursor->size; ++i)
+        {
+            std::cout << *cursor->data[i] << " ";
+        }
+        std::cout << "\n";
+
+        if (!cursor->is_leaf)
+        {
+            for (int i = 0; i < cursor->size + 1; ++i)
+            {
+                print(cursor->children[i]);
+            }
+        }
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     double_list<int> a;
@@ -137,6 +163,64 @@ int main(int argc, char const *argv[])
     {
         cout << hm.get("alexis")->data->data[i] << endl;
     }
+
+    return 0;
+}
+
+int main(int argc, char const *argv[])
+{
+    std::string texto = "hola mi amor, hola como estashola";
+    std::string patron = " ";
+    std::cout << boolBoyerMoore(texto, patron) << std::boolalpha;
+
+    return 0;
+}
+
+int main(int argc, char const *argv[])
+{
+    transaction xd1{"cr7", "messi", 233.3, "c"};
+    transaction xd2{"messi", "cr7", 233.3, "b"};
+    // si tienen el mismo valor de monto, será mayor la que se haya hecho antes(fecha)
+    std::cout << (xd1 < xd2);
+    
+    return 0;
+}
+
+int main(int argc, char const *argv[])
+{
+
+    transaction tx1("Skyndu", "Puce", 8822.42, "1643003849");
+    transaction tx2("Bigtax", "Granite", 1822.57, "1655979226");
+
+    std::cout << tx1 << std::endl;
+    std::cout << tx2 << std::endl;
+
+    std::cout << (tx1.operator< <float>(tx2)) << std::endl;
+    std::cout << (tx1.operator< <string>(tx2)) << std::endl;
+    std::cout << (tx2< (tx1)) << std::endl;
+
+    return 0;
+}
+
+int main(int argc, char const *argv[])
+{
+
+    transaction* tx1 = new transaction("Skyndu", "Puce", 8822.42, "1643003849");
+    transaction* tx2 = new transaction("Bigtax", "Granite", 1822.57, "1655979226");
+    transaction* tx3 = new transaction("Realcube", "Goldenrod", 4323.1, "1636873090");
+
+    BPlusTree<transaction*> orderbyAmount(3);
+
+    orderbyAmount.insert(tx1);
+    orderbyAmount.insert(tx2);
+    orderbyAmount.insert(tx3);
+
+    orderbyAmount.bpt_print();
+
+    tx2->string1 = "fernando";
+    std::cout << std::endl;
+
+    orderbyAmount.bpt_print();
 
     return 0;
 }
