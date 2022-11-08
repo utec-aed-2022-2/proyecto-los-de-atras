@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
     srand(time(nullptr));
     int inicio = 1; int fin = 5;
 
-    std::ifstream archivo("MOCK_DATA_DEMO.csv");
+    std::ifstream archivo("MOCK_DATA_DEMO1.csv");
     std::string linea;
     char delimitador = ',';
     getline(archivo, linea);
