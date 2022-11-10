@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HASHMAP_H
 #define HASHMAP_H
 #include "nodes.h"
@@ -5,7 +6,7 @@
 const double maxFillFactor = 0.8;
 
 template <typename K, typename V>
-class hashMap
+class HashMap
 {
 private:
 	nodeHash<K, V>** array;
@@ -13,13 +14,13 @@ private:
 	size_t size;
 
 public:
-	hashMap();
-	~hashMap();
-	hashMap(size_t capacity);
+	HashMap();
+	~HashMap();
+	HashMap(size_t capacity);
 
 	void set(K key, V value);
 	V get(K key);
-	/* remove section */
+	/*remove section*/
 
 private:
 	int hashFunction(K key);
@@ -28,7 +29,7 @@ private:
 };
 
 template <typename K, typename V>
-hashMap<K, V>::hashMap()
+HashMap<K, V>::HashMap()
 {
 	this->capacity = 23;
 	this->size = 0;
@@ -37,10 +38,10 @@ hashMap<K, V>::hashMap()
 }
 
 template <typename K, typename V>
-hashMap<K, V>::~hashMap() {}
+HashMap<K, V>::~HashMap() {}
 
 template <typename K, typename V>
-hashMap<K, V>::hashMap(size_t capacity)
+HashMap<K, V>::HashMap(size_t capacity)
 {
 	this->capacity = capacity;
 	this->size = 0;
@@ -49,7 +50,7 @@ hashMap<K, V>::hashMap(size_t capacity)
 }
 
 template <typename K, typename V>
-void hashMap<K, V>::set(K key, V value)
+void HashMap<K, V>::set(K key, V value)
 {
 	if(fillFactor() >= maxFillFactor) { rehashing(); }
 
@@ -67,7 +68,7 @@ void hashMap<K, V>::set(K key, V value)
 }
 
 template <typename K, typename V>
-V hashMap<K, V>::get(K key)
+V HashMap<K, V>::get(K key)
 {
 	int hashIndex = hashFunction(key);
 	int counter = 0;
@@ -84,19 +85,19 @@ V hashMap<K, V>::get(K key)
 }
 
 template <typename K, typename V>
-int hashMap<K, V>::hashFunction(K key)
+int HashMap<K, V>::hashFunction(K key)
 {
 	std::hash<K> ptr_hash;
 	return ptr_hash(key)%capacity;
 }
 
-/* remove section */
+/*remove section*/
 
 template <typename K, typename V>
-double hashMap<K, V>::fillFactor() { return size / (capacity); }
+double HashMap<K, V>::fillFactor() { return size / (capacity); }
 
 template <typename K, typename V>
-void hashMap<K, V>::rehashing()
+void HashMap<K, V>::rehashing()
 {
 	int prev_capacity = capacity;
 	capacity = capacity*2;

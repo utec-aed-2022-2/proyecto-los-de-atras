@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DOUBLELIST_H
 #define DOUBLELIST_H
 #include "nodes.h"
@@ -27,7 +28,7 @@ public:
 };
 
 template<typename T>
-class doubleList : public list<T>
+class DoubleList : public list<T>
 {
 private:
     nodeList<T>* _front;
@@ -35,8 +36,8 @@ private:
     size_t _size;
 
 public:
-    doubleList();
-    ~doubleList();
+    DoubleList();
+    ~DoubleList();
 
     T front();
     T back();
@@ -56,7 +57,7 @@ public:
 };
 
 template<typename T>
-doubleList<T>::doubleList()
+DoubleList<T>::DoubleList()
 {
     this->_front = nullptr;
     this->_back = nullptr;
@@ -64,30 +65,30 @@ doubleList<T>::doubleList()
 }
 
 template<typename T>
-doubleList<T>::~doubleList() { clear(); }
+DoubleList<T>::~DoubleList() { clear(); }
 
 template<typename T>
-T doubleList<T>::front()
+T DoubleList<T>::front()
 {   
     if (!is_empty()) { return _front->data; }
     else { throw std::runtime_error("empty"); }
 }
 
 template<typename T>
-T doubleList<T>::back()
+T DoubleList<T>::back()
 {
     if (!is_empty()) { return _back->data; }
     else { throw std::runtime_error("empty"); }
 }
 
 template<typename T>
-nodeList<T>* doubleList<T>::begin() { return _front; }
+nodeList<T>* DoubleList<T>::begin() { return _front; }
 
 template<typename T>
-nodeList<T>* doubleList<T>::end() { return _back->next; }
+nodeList<T>* DoubleList<T>::end() { return _back->next; }
 
 template<typename T>
-void doubleList<T>::push_front(T data)
+void DoubleList<T>::push_front(T data)
 {
     if (is_empty())
     {
@@ -105,7 +106,7 @@ void doubleList<T>::push_front(T data)
 }
 
 template<typename T>
-void doubleList<T>::push_back(T data)
+void DoubleList<T>::push_back(T data)
 {
     if (is_empty()) { push_front(data); }
     else
@@ -118,7 +119,7 @@ void doubleList<T>::push_back(T data)
 }
 
 template<typename T>
-void doubleList<T>::pop_front()
+void DoubleList<T>::pop_front()
 {
     if (!is_empty())
     {
@@ -141,7 +142,7 @@ void doubleList<T>::pop_front()
 }
 
 template<typename T>
-void doubleList<T>::pop_back()
+void DoubleList<T>::pop_back()
 {
     if (!is_empty())
     {
@@ -160,10 +161,10 @@ void doubleList<T>::pop_back()
 }
 
 template<typename T>
-bool doubleList<T>::is_empty() const { return _size == 0; }
+bool DoubleList<T>::is_empty() const { return _size == 0; }
 
 template<typename T>
-void doubleList<T>::clear()
+void DoubleList<T>::clear()
 {
     nodeList<T>* iter = _front;
     while (iter != nullptr)
@@ -179,7 +180,7 @@ void doubleList<T>::clear()
 }
 
 template<typename T>
-void doubleList<T>::insert(T data, int pos)
+void DoubleList<T>::insert(T data, int pos)
 {
     if (!is_empty() && pos < _size)
     {
@@ -194,7 +195,7 @@ void doubleList<T>::insert(T data, int pos)
 }
 
 template<typename T>
-void doubleList<T>::remove(int pos)
+void DoubleList<T>::remove(int pos)
 {
     if (!is_empty() && pos < _size)
     {
@@ -215,7 +216,7 @@ void doubleList<T>::remove(int pos)
 }
 
 template<typename T>
-T& doubleList<T>::operator[](int pos)
+T& DoubleList<T>::operator[](int pos)
 {
     if (!is_empty() && pos < _size)
     {
@@ -227,6 +228,6 @@ T& doubleList<T>::operator[](int pos)
 }
 
 template<typename T>
-size_t doubleList<T>::size() const { return _size; }
+size_t DoubleList<T>::size() const { return _size; }
 
 #endif

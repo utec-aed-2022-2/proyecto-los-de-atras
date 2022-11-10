@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BOYERMOORE_H
 #define BOYERMOORE_H
 #include <iostream>

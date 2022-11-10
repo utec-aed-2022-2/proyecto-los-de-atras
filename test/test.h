@@ -1,226 +1,207 @@
-#include "../class/hashMap.h"
-#include "../class/BPlusTree.h"
-//#include "../class/Partial/BlockChain.h"
-//#include "../class/Final/BlockChain.h"
-#include "../function/BoyerMoore.h"
-
 /*
-void bpt_print(){
-    print(this->root);
-}
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
 
-void print(nodeBPlus<T>* cursor)
+void read()
 {
-    if (cursor != nullptr)
+    std::ifstream archivo("MOCK_DATA_DEMO2.csv");
+    std::string linea;
+    char delimitador = ',';
+    getline(archivo, linea);
+    while (getline(archivo, linea))
     {
-        for (int i = 0; i < cursor->size; ++i)
-        {
-            std::cout << *cursor->data[i] << " ";
-        }
-        std::cout << "\n";
+        std::stringstream stream(linea);
+        std::string username, password;
 
-        if (!cursor->is_leaf)
-        {
-            for (int i = 0; i < cursor->size + 1; ++i)
-            {
-                print(cursor->children[i]);
-            }
-        }
+        getline(stream, username, delimitador);
+        getline(stream, password, delimitador);
+
+        std::cout << "username: " << username << ", password: " << password << std::endl;
     }
+    archivo.close();
 }
 
-int main(int argc, char const *argv[])
+#include <iostream>
+#include <chrono>
+ 
+int main()
 {
-    double_list<int> a;
-    a.push_back(1);
-    a.push_back(2);
-
-    double_list<int> b = a;
-
-    for (int i = 0; i < b.size(); i++) { std::cout << b[i] << std::endl; }
-    return 0;
+    const auto p1 = std::chrono::system_clock::now();
+ 
+    std::cout << "seconds since epoch: "
+              << std::chrono::duration_cast<std::chrono::seconds>(
+                   p1.time_since_epoch()).count() << '\n';
 }
 
-int main(int argc, char const *argv[])
-{
-    hashMap<int, std::string> hm;
-    std:: cout << hm[3];
-
-    return 0;
-}
-
-int main(int argc, char const *argv[])
-{
-    hashMap<std::string, int>* h = new hashMap<std::string, int>;
-
-    h->set("aaaa", 4);
-    h->set("xd", 4);
-    h->set("elpepe", 4);
-
-    std::cout << h->get("xd");
-
-    return 0;
-}
-
-int main(int argc, char const *argv[])
-{
-    BPlusTree<int> bpt1(3);
-    bpt1.insert(9);
-    bpt1.insert(5);
-    bpt1.insert(1);
-    bpt1.insert(7);
-    bpt1.insert(4);
-    bpt1.insert(6);
-    print(bpt1.GetRoot());
-
-    std::cout << std::endl;
-    
-    BPlusTree<std::string> bpt2(3);
-    bpt2.insert("i");
-    bpt2.insert("e");
-    bpt2.insert("a");
-    bpt2.insert("g");
-    bpt2.insert("d");
-    bpt2.insert("f");
-    print(bpt2.GetRoot());
-
-    return 0;
-}
-
-int main(int argc, char const *argv[])
-{
-    blockchain xd;
-
-    xd.addBlock();
-    xd.addBlock();
-    xd.addBlock();
-    xd.addBlock();
-
-    xd.setData(1, {"a", "b", 100, "1633227430000"});
-    xd.setData(3, {"a", "c", 200, "1633227430000"});
-    xd.setData(3, {"w", "a", 300, "1633227430000"});
-    xd.setData(4, {"z", "g", 5500, "1633227430000"});
-    xd.setData(1, {"a", "h", 200, "1633227430000"});
-    xd.setData(1, {"q", "j", 1200, "1633227430000"});
-
-    xd.minechain(3);
-
-    xd.setData(3, {"w", "a", 3022220, "1633227430000"});
-
-    xd.addBlock();
-
-    std::cout << xd;
-}
-
-int main(int argc, char const *argv[])
-{
-    hashMap<string, nodeList<int>*> hm;
-    
-    doubleList<int> dl;
-
-
-    dl.push_back(3);
-
-    for (int i = 0; i < dl.size(); i++)
-    {
-        cout << dl[i] << endl;
-    }
-
-    hm.set("begin", dl.begin());
-
-    cout << &hm.get("begin")->data << endl;
-    cout << &dl[0] << endl;
-    
-    return 0;
-}
-
-int main(int argc, char const *argv[])
-{
-    blockchain xd;
-
-    xd.addBlock();
-    xd.addBlock();
-    xd.addBlock();
-
-    xd.setData(1, {"fernando", "carlos", 100, "1633227430000"});
-    xd.setData(2, {"alexis", "aaron", 200, "1633227430000"});
-    xd.setData(2, {"alexis", "fernando", 300, "1633227430000"});
-    xd.setData(3, {"carlos", "aaron", 5500, "1633227430000"});
-    xd.setData(3, {"carlos", "fernando", 200, "1633227430000"});
-    xd.setData(3, {"carlos", "juan", 1200, "1633227430000"});
-
-    hashMap<string, nodeList<block*>*> hm;
-
-    // poner chain publico solo para prueba
-    
-    hm.set("fernando", xd.chain.begin());
-    hm.set("alexis", xd.chain.begin()->next);
-    hm.set("carlos", xd.chain.begin()->next->next);
-
-    xd.setData(2, {"alexis", "juan", 1000, "1633227430000"});
-
-    for (int i = 0; i < hm.get("alexis")->data->data.size(); i++)
-    {
-        cout << hm.get("alexis")->data->data[i] << endl;
-    }
-
-    return 0;
-}
-
-int main(int argc, char const *argv[])
-{
-    std::string texto = "hola mi amor, hola como estashola";
-    std::string patron = " ";
-    std::cout << boolBoyerMoore(texto, patron) << std::boolalpha;
-
-    return 0;
-}
-
-int main(int argc, char const *argv[])
-{
-    transaction xd1{"cr7", "messi", 233.3, "c"};
-    transaction xd2{"messi", "cr7", 233.3, "b"};
-    // si tienen el mismo valor de monto, será mayor la que se haya hecho antes(fecha)
-    std::cout << (xd1 < xd2);
-    
-    return 0;
-}
+#include "class/BPlusTree.h"
+#include "transaction.h"
 
 int main(int argc, char const *argv[])
 {
 
     transaction tx1("Skyndu", "Puce", 8822.42, "1643003849");
-    transaction tx2("Bigtax", "Granite", 1822.57, "1655979226");
+    transaction tx2("Bigtax", "Granite", 1822.57, "1643003856");
 
+    std::cout << &tx1 << std::endl;
     std::cout << tx1 << std::endl;
+    std::cout << &tx2 << std::endl;
     std::cout << tx2 << std::endl;
 
-    std::cout << (tx1.operator< <float>(tx2)) << std::endl;
-    std::cout << (tx1.operator< <string>(tx2)) << std::endl;
-    std::cout << (tx2< (tx1)) << std::endl;
+    transactionOverload<transaction, float> x1(tx1);
+    transactionOverload<transaction, float> y1(tx2);
+
+    std::cout << (x1 < y1) << std::endl;
+
+    transactionOverload<transaction, std::string> x2(tx1);
+    transactionOverload<transaction, std::string> y2(tx2);
+
+    std::cout << (x2 < y2) << std::endl;
+
+    std::cout << x1.pointer << std::endl;
+    std::cout << x2.pointer << std::endl;
+    std::cout << y1.pointer << std::endl;
+    std::cout << y2.pointer << std::endl;
+
+    return 0;
+}
+*/
+
+/*
+#include "class/BPlusTree.h"
+#include "transaction.h"
+
+int main(int argc, char const *argv[])
+{
+    transaction tx1("Realcube", "Goldenrod", 300.3, "1643003853");
+    std::cout << &tx1 << std::endl;
+    transaction tx2("Skyndu", "Puce", 100, "1643003870");
+    std::cout << &tx2 << std::endl;
+    transaction tx3("Bigtax", "Granite", 200, "1643003856");
+    std::cout << &tx3 << std::endl;
+    transaction tx4("Bigtax", "Granite", 1322.57, "1643003849");
+    std::cout << &tx4 << std::endl;
+    transaction tx5("Skyndu", "Puce", 882.42, "1643003851");
+    std::cout << &tx5 << std::endl;
+
+    BPlusTree<transactionOverload<transaction, std::string>> orderByDate(3);
+    BPlusTree<transactionOverload<transaction, float>> orderByNumber(3);
+    std::cout << std::endl;
+
+
+    transactionOverload<transaction, std::string> ptx1(tx1);
+    std::cout << ptx1.pointer << std::endl;
+    transactionOverload<transaction, std::string> ptx2(tx2);
+    std::cout << ptx2.pointer << std::endl;
+    transactionOverload<transaction, std::string> ptx3(tx3);
+    std::cout << ptx3.pointer << std::endl;
+    transactionOverload<transaction, std::string> ptx4(tx4);
+    std::cout << ptx4.pointer << std::endl;
+    transactionOverload<transaction, std::string> ptx5(tx5);
+    std::cout << ptx5.pointer << std::endl;
+
+    orderByDate.insert(ptx1);
+    orderByDate.insert(ptx2);
+    orderByDate.insert(ptx3);
+    orderByDate.insert(ptx4);
+    orderByDate.insert(ptx5);
+
+    coutOrder(orderByDate.GetRoot());
 
     return 0;
 }
 
+#include "class/BPlusTree.h"
+#include "transaction.h"
+
 int main(int argc, char const *argv[])
 {
+    transaction tx1("Realcube", "Goldenrod", 300.3, "1643003853");
+    transaction tx2("Skyndu", "Puce", 100, "1643003870");
+    transaction tx3("Bigtax", "Granite", 200, "1643003856");
+    transaction tx4("Bigtax", "Granite", 1322.57, "1643003849");
+    transaction tx5("Skyndu", "Puce", 882.42, "1643003851");
 
-    transaction* tx1 = new transaction("Skyndu", "Puce", 8822.42, "1643003849");
-    transaction* tx2 = new transaction("Bigtax", "Granite", 1822.57, "1655979226");
-    transaction* tx3 = new transaction("Realcube", "Goldenrod", 4323.1, "1636873090");
+    transaction tx6("Realpoint", "Diamante", 1233.482, "1643003851");
+    transaction tx7("Diamante", "Realpoint", 2882.2, "1643003851");
 
-    BPlusTree<transaction*> orderbyAmount(3);
+    BPlusTree<transactionOverload<transaction, std::string>> orderByDate(3);
+    BPlusTree<transactionOverload<transaction, float>> orderByNumber(3);
 
-    orderbyAmount.insert(tx1);
-    orderbyAmount.insert(tx2);
-    orderbyAmount.insert(tx3);
+    orderByDate.insert(&tx1);
+    orderByDate.insert(&tx2);
+    orderByDate.insert(&tx3);
+    orderByDate.insert(&tx4);
+    orderByDate.insert(&tx5);
 
-    orderbyAmount.bpt_print();
+    orderByNumber.insert(&tx1);
+    orderByNumber.insert(&tx2);
+    orderByNumber.insert(&tx3);
+    orderByNumber.insert(&tx4);
+    orderByNumber.insert(&tx5);
 
-    tx2->string1 = "fernando";
+    coutOrder(orderByDate.GetRoot());
+    std::cout << orderByNumber.search(&tx2) << std::endl;
+    std::cout << orderByNumber.search(&tx7) << std::endl;
+    coutOrder(orderByNumber.GetRoot());
+
+    return 0;
+}
+
+#include "class/BPlusTree.h"
+#include "block.h"
+
+int main(int argc, char const *argv[])
+{   
+    HashMap<std::string, transaction*> dataHash;
+
+    transaction tx1("Skyndu", "Puce", 8822.42, "1643003849");
+    transaction tx2("Bigtax", "Granite", 1822.57, "1655979226");
+
+    dataHash.set("tx1", &tx1);
+    dataHash.set("tx2", &tx2);
+
+    std::cout << &tx1 << std::endl;
+    std::cout << dataHash.get("tx2") << std::endl;
+
+    return 0;
+}
+
+#include "block.h"
+
+int main(int argc, char const *argv[])
+{
+    block B(1, "0000000000000000000000000000000000000000000000000000000000000000");
+
+    transaction tx1("Realcube", "Goldenrod", 300.43, "1643003853");
+    transaction tx2("Skyndu", "Puce", 100, "1643003870");
+    transaction tx3("Bigtax", "Granite", 200, "1643003856");
+    transaction tx4("Bigtax", "Granite", 1322.57, "1643003849");
+    transaction tx5("Skyndu", "Puce", 882.42, "1643003851");
+    transaction tx6("Realpoint", "Diamante", 1233.482, "1643003812");
+    transaction tx7("Diamante", "Realpoint", 2882.2, "1643003865");
+
+    B.insert(tx1);
+    B.insert(tx2);
+    B.insert(tx3);
+    B.insert(tx4);
+    B.insert(tx5);
+    B.insert(tx6);
+    B.insert(tx7);
+
     std::cout << std::endl;
+    std::cout << B;
 
-    orderbyAmount.bpt_print();
+    std::cout << std::endl;
+    B.coutOrderByDate();
+
+    std::cout << std::endl;
+    B.coutOrderByNumber();
+
+    std::cout << std::endl;
+    B.mine();
+    std::cout << B;
 
     return 0;
 }

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HASHFUNCTIONS_H
 #define HASHFUNCTIONS_H
 #include <iostream>

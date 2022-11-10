@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BPLUSTREE_H
 #define BPLUSTREE_H
 #include "nodes.h"
@@ -10,14 +11,14 @@ private:
     size_t maxchildren;
 
 public:
-    BPlusTree() = default;
+    BPlusTree();
     ~BPlusTree();
     BPlusTree(size_t maxchildren);
 
     nodeBPlus<T>* GetRoot() const;
     void insert(T key);
     /*remove section*/
-    bool search(T key) const;
+    bool search(T key);
 
 private:
     int find_index(T* arr, T key, size_t len) const;
@@ -33,6 +34,13 @@ private:
 
 template <typename T>
 BPlusTree<T>::~BPlusTree() { clear(this->root); }
+
+template <typename T>
+BPlusTree<T>::BPlusTree()
+{
+    this->maxchildren = 5;
+    this->root = nullptr;
+}
 
 template <typename T>
 BPlusTree<T>::BPlusTree(size_t maxchildren)
@@ -283,6 +291,14 @@ void BPlusTree<T>::insert(T key)
 /*remove section*/
 
 template <typename T>
-bool BPlusTree<T>::search(T key) const { return search_node(this->root, key) != nullptr; }
+bool BPlusTree<T>::search(T key) { return search_node(this->root, key) != nullptr; }
+
+template <typename T>
+void coutOrder(nodeBPlus<T>* cursor)
+{
+    while (!(*cursor).is_leaf) { cursor = (*cursor).children[0]; }
+    for (int i = 0; i < (*cursor).size; i++) { std::cout << (*cursor).data[i] << std::endl; }
+    if ((*cursor).children[(*cursor).size] != nullptr) { coutOrder((*cursor).children[(*cursor).size]); }   
+}
 
 #endif
