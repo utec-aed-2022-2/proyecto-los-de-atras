@@ -13,18 +13,24 @@ struct block
 {
     std::uint64_t id;
     std::uint64_t nonce;
+
     DoubleList<transaction> data;
     HashMap<std::string, transaction*> dataHash;
     BPlusTree<transactionOverload<transaction, std::string>> orderByDate;
     BPlusTree<transactionOverload<transaction, float>> orderByNumber;
-    std::string prevHash{hashGenesis};
+    
+    std::string prevHash;
     std::string hash;
 
     block() = default;
     ~block() = default;
     block(uint64_t id, std::string prevHash = hashGenesis);
     block(const block &other);
-    void insert(transaction tx);
+
+    void insert(transaction& tx);
+    /*remove section*/
+    bool search(transaction& tx);
+    
     block& operator=(const block &other);
     bool operator==(block const& other);
     bool operator!=(block const& other);
@@ -71,14 +77,21 @@ block& block::operator=(const block &other)
     return *this;
 }
 
-void block::insert(transaction tx)
+void block::insert(transaction& tx)
 {
     std::stringstream ss; ss << tx;
     data.push_back(tx);
-    dataHash.set(sha256(ss.str()), &tx);
-    orderByDate.insert(&tx);
-    orderByNumber.insert(&tx);
+    dataHash.set(ss.str(), &data.end()->data);
+    orderByDate.insert(&data.end()->data);
+    orderByNumber.insert(&data.end()->data);
     this->hash = this->calculateHash();
+}
+
+bool block::search(transaction& tx)
+{
+    std::stringstream ss; ss << tx;
+    dataHash.get(ss.str());
+    return true;
 }
 
 bool block::operator==(block const& other) { return id == other.id && nonce == other.nonce && prevHash == other.prevHash && hash == other.hash; }

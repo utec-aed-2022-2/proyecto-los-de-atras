@@ -85,7 +85,7 @@ template<typename T>
 nodeList<T>* DoubleList<T>::begin() { return _front; }
 
 template<typename T>
-nodeList<T>* DoubleList<T>::end() { return _back->next; }
+nodeList<T>* DoubleList<T>::end() { return _back; }
 
 template<typename T>
 void DoubleList<T>::push_front(T data)

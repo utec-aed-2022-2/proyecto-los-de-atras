@@ -36,7 +36,7 @@ int main()
 }
 
 #include "class/BPlusTree.h"
-#include "transaction.h"
+#include "Transaction.h"
 
 int main(int argc, char const *argv[])
 {
@@ -70,7 +70,7 @@ int main(int argc, char const *argv[])
 
 /*
 #include "class/BPlusTree.h"
-#include "transaction.h"
+#include "Transaction.h"
 
 int main(int argc, char const *argv[])
 {
@@ -113,7 +113,7 @@ int main(int argc, char const *argv[])
 }
 
 #include "class/BPlusTree.h"
-#include "transaction.h"
+#include "Transaction.h"
 
 int main(int argc, char const *argv[])
 {
@@ -150,7 +150,7 @@ int main(int argc, char const *argv[])
 }
 
 #include "class/BPlusTree.h"
-#include "block.h"
+#include "BlockChain.h"
 
 int main(int argc, char const *argv[])
 {   
@@ -168,7 +168,7 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-#include "block.h"
+#include "Block.h"
 
 int main(int argc, char const *argv[])
 {
@@ -202,6 +202,107 @@ int main(int argc, char const *argv[])
     std::cout << std::endl;
     B.mine();
     std::cout << B;
+
+    return 0;
+}
+
+#include "Block.h"
+
+int main(int argc, char const *argv[])
+{
+    transaction tx1("Realcube", "Goldenrod", 300.43, "1643003853");
+    transaction tx2("Skyndu", "Puce", 100, "1643003870");
+    transaction tx3("Bigtax", "Granite", 200, "1643003856");
+    transaction tx4("Bigtax", "Granite", 1322.57, "1643003849");
+    transaction tx5("Skyndu", "Puce", 882.42, "1643003851");
+    transaction tx6("Realpoint", "Diamante", 1233.482, "1643003812");
+    transaction tx7("Diamante", "Realpoint", 2882.2, "1643003865");
+
+    block B1(1, "0000000000000000000000000000000000000000000000000000000000000000");
+    block B2(2, B1.hash);
+
+    B1.insert(tx1);
+    B1.insert(tx2);
+    B1.insert(tx3);
+
+    B2.insert(tx4);
+    B2.insert(tx5);
+    B2.insert(tx6);
+    B2.insert(tx7);
+
+    DoubleList<block> chain;
+    HashMap<std::string, nodeList<block>*> chainHash;
+
+    chain.push_back(B1);
+    chain.push_back(B2);
+
+    chainHash.set("b1", chain.begin());
+    chainHash.set("b2", chain.begin()->next);
+
+    //std::cout << chainHash.get("b1")->data;
+    std::cout << B1;
+
+    return 0;
+}
+
+#include "BlockChain.h"
+
+int main(int argc, char const *argv[])
+{
+    BlockChain bch;
+
+    bch.createUser("fernando", "6077");
+    bch.createUser("carlos", "1919");
+    bch.createUser("alexis", "2020");
+
+    bch.setTx("fernando", "6077", "carlos", 200);
+    bch.setTx("fernando", "6077", "alexis", 2200);
+    bch.setTx("fernando", "6077", "juan", 500);
+    bch.setTx("fernando", "6077", "luis", 870);
+
+    bch.viewMyBlock("fernando", "6077");
+    std::cout << std::endl;
+    bch.viewMyBlock("carlos", "1919");
+    std::cout << std::endl;
+    bch.viewMyBlock("alexis", "2020");
+    std::cout << std::endl;
+
+    std::cout << std::endl;
+    bch.viewMyBlockAmount("fernando", "6077");
+
+    std::cout << std::endl;
+    bch.viewMyBlockDate("fernando", "6077");
+
+    return 0;
+}
+
+#include "BlockChain.h"
+
+int main(int argc, char const *argv[])
+{
+    BlockChain bch;
+
+    bch.createUser("fernando", "6077");
+    bch.createUser("carlos", "1919");
+    bch.createUser("alexis", "2020");
+
+    bch.setTx("fernando", "6077", "carlos", 200, "1657748880");
+    bch.setTx("fernando", "6077", "alexis", 2200, "1656620824");
+    bch.setTx("fernando", "6077", "juan", 500, "1645827356");
+    bch.setTx("fernando", "6077", "luis", 870, "1645827359");
+
+    bch.viewMyBlock("fernando", "6077");
+    std::cout << std::endl;
+    bch.viewMyBlock("carlos", "1919");
+    std::cout << std::endl;
+    bch.viewMyBlock("alexis", "2020");
+    std::cout << std::endl;
+
+    std::cout << std::endl;
+    bch.viewMyBlockAmount("fernando", "6077");
+
+    std::cout << std::endl;
+    bch.viewMyBlockDate("fernando", "6077");
 
     return 0;
 }
