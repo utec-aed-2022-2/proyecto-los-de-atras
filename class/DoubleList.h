@@ -12,18 +12,18 @@ public:
 
     virtual T front() = 0;
     virtual T back() = 0;
-    virtual nodeList<T>* begin() = 0;
-    virtual nodeList<T>* end() = 0;
-    virtual void push_front(T) = 0;
-    virtual void push_back(T) = 0;
+    virtual void push_front(const T&) = 0;
+    virtual void push_back(const T&) = 0;
     virtual void pop_front() = 0;
     virtual void pop_back() = 0;
     virtual bool is_empty() const = 0;
     virtual void clear() = 0;
     //
-    virtual void insert(T, int) = 0;
+    virtual void insert(const T&, int) = 0;
     virtual void remove(int) = 0;
     virtual T& operator[](int) = 0;
+    virtual nodeList<T>* begin() = 0;
+    virtual nodeList<T>* end() = 0;
     virtual size_t size() const = 0;
 };
 
@@ -41,18 +41,18 @@ public:
 
     T front();
     T back();
-    nodeList<T>* begin();
-    nodeList<T>* end();
-    void push_front(T data);
-    void push_back(T data);
+    void push_front(const T& data);
+    void push_back(const T& data);
     void pop_front();
     void pop_back();
     bool is_empty() const;
     void clear();
     //
-    void insert(T data, int pos);
+    void insert(const T& data, int pos);
     void remove(int pos);
     T& operator[](int pos);
+    nodeList<T>* begin();
+    nodeList<T>* end();
     size_t size() const;
 };
 
@@ -82,13 +82,7 @@ T DoubleList<T>::back()
 }
 
 template<typename T>
-nodeList<T>* DoubleList<T>::begin() { return _front; }
-
-template<typename T>
-nodeList<T>* DoubleList<T>::end() { return _back; }
-
-template<typename T>
-void DoubleList<T>::push_front(T data)
+void DoubleList<T>::push_front(const T& data)
 {
     if (is_empty())
     {
@@ -106,7 +100,7 @@ void DoubleList<T>::push_front(T data)
 }
 
 template<typename T>
-void DoubleList<T>::push_back(T data)
+void DoubleList<T>::push_back(const T& data)
 {
     if (is_empty()) { push_front(data); }
     else
@@ -180,7 +174,7 @@ void DoubleList<T>::clear()
 }
 
 template<typename T>
-void DoubleList<T>::insert(T data, int pos)
+void DoubleList<T>::insert(const T& data, int pos)
 {
     if (!is_empty() && pos < _size)
     {
@@ -226,6 +220,12 @@ T& DoubleList<T>::operator[](int pos)
     }
     else { throw std::runtime_error("error"); }
 }
+
+template<typename T>
+nodeList<T>* DoubleList<T>::begin() { return _front; }
+
+template<typename T>
+nodeList<T>* DoubleList<T>::end() { return _back; }
 
 template<typename T>
 size_t DoubleList<T>::size() const { return _size; }

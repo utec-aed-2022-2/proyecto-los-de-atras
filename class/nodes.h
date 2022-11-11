@@ -2,6 +2,7 @@
 #ifndef NODES_H
 #define NODES_H
 #include <iostream>
+#include <functional>
 
 template<typename T>
 struct nodeList
@@ -12,7 +13,7 @@ struct nodeList
 
     nodeList() = default;
     ~nodeList() = default;
-    nodeList(T data, nodeList<T>* next = nullptr, nodeList<T>* prev = nullptr): data(data), next(next), prev(prev) {}
+    nodeList(const T& data, nodeList<T>* next = nullptr, nodeList<T>* prev = nullptr): data(data), next(next), prev(prev) {}
 };
 
 template <typename K, typename V>
@@ -22,7 +23,7 @@ struct nodeHash
 	K key;
     nodeHash() = default;
     ~nodeHash() = default;
-	nodeHash(K key, V value): key(key), value(value) {}
+	nodeHash(const K& key, const V& value): key(key), value(value) {}
 };
 
 template <typename T>

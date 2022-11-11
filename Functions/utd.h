@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-std::string unixTimeToHumanReadable(long int seconds)
+std::string unixTimeToHumanReadable(const long int& seconds)
 {
     std::string ans = "";
     int daysOfMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -94,8 +94,5 @@ std::string unixTimeToHumanReadable(long int seconds)
 
     return ans;
 }
-
-
-
 
 #endif
