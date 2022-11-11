@@ -1,6 +1,7 @@
 #ifndef BLOCKCHAIN_H
 #define BLOCKCHAIN_H
 #include <chrono>
+#include <fstream>
 #include "block.h"
 
 class BlockChain
@@ -13,6 +14,22 @@ private:
 
 public:
     BlockChain() = default;
+    explicit BlockChain(const std::string &path, char delimiter=',') { // construye los usuarios en el path
+        std::ifstream file(path);
+        std::string line;
+        std::getline(file, line);
+        std::cout << line << std::endl;
+
+        while (getline(file, line)) {
+            std::stringstream stream(line);
+            std::string username;
+            std::string password;
+            std::getline(stream, username, delimiter);
+            std::getline(stream, password, delimiter);
+            this->createUser(username, password);
+        }
+    }
+
     void createUser(std::string username, std::string password);
     void viewAll();
     void viewMyBlock(std::string username, std::string password);
