@@ -2,11 +2,11 @@
 
 int main(int argc, char const *argv[]) {
     BlockChain bch("./MOCK_DATA_DEMO2.csv");
-    bch.viewAll();
     auto* gui = new Gui();
     if (gui->initialize(&bch)) {
         gui->runLoop();
     }
+    // bch->save() // TODO: que guarde la nueva information en los archivos correspondientes
     delete gui;
 
 //    bch.setTx("fernando", "6077", "carlos", 200, "1657748880");
