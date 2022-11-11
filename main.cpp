@@ -1,14 +1,14 @@
 #include "BlockChain.h"
-#include "ui/Gui.h"
+//#include "ui/Gui.h"
 
-int main(int argc, char const *argv[])
-{
-    auto* gui = new Gui;
-    if (gui->initialize()) {
-        gui->runLoop();
-    }
-    delete gui;
-
+//int main(int argc, char const *argv[])
+//{
+//    auto* gui = new Gui;
+//    if (gui->initialize()) {
+//        gui->runLoop();
+//    }
+//    delete gui;
+//
 //    BlockChain bch;
 //
 //    bch.createUser("fernando", "6077");
@@ -33,5 +33,5 @@ int main(int argc, char const *argv[])
 //    std::cout << std::endl;
 //    bch.viewMyBlockDate("fernando", "6077");
 
-    return 0;
-}
+//    return 0;
+//}

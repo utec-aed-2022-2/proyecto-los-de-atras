@@ -14,12 +14,15 @@ private:
 public:
     BlockChain() = default;
     void createUser(std::string username, std::string password);
+    void viewAll();
     void viewMyBlock(std::string username, std::string password);
     void viewMyBlockDate(std::string username, std::string password);
     void viewMyBlockAmount(std::string username, std::string password);
-    /*minTx*/
-    /*maxTx*/
-    /*viewTx*/
+    void minTxDate(std::string username, std::string password);
+    void maxTxDate(std::string username, std::string password);
+    void minTxAmount(std::string username, std::string password);
+    void maxTxAmount(std::string username, std::string password);
+    bool searchTx(std::string username, std::string password, std::string to, float amount, std::string date);
     /*viewMyBlockDateRange*/
     /*viewMyBlockAmountRange*/
     void setTx(std::string username, std::string password, std::string to, float amount);
@@ -40,6 +43,16 @@ void BlockChain::createUser(std::string username, std::string password)
         std::stringstream ss; ss<<username; ss<<password;
         usersHash.set(ss.str(), chain.end());
     }
+}
+
+void BlockChain::viewAll()
+{
+    auto iterator = chain.begin();
+    while (iterator!=nullptr)
+    {
+        std::cout << iterator->data << std::endl;
+        iterator = iterator->next;
+    }    
 }
 
 void BlockChain::viewMyBlock(std::string username, std::string password)
@@ -63,9 +76,37 @@ void BlockChain::viewMyBlockAmount(std::string username, std::string password)
     usersHash.get(ss.str())->data.coutOrderByNumber();
 }
 
-/*minTx*/
-/*maxTx*/
-/*viewTx*/
+void BlockChain::minTxDate(std::string username, std::string password)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    usersHash.get(ss.str())->data.orderByDate.min();
+}
+
+void BlockChain::maxTxDate(std::string username, std::string password)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    usersHash.get(ss.str())->data.orderByDate.max();
+}
+
+void BlockChain::minTxAmount(std::string username, std::string password)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    usersHash.get(ss.str())->data.orderByNumber.min();
+}
+
+void BlockChain::maxTxAmount(std::string username, std::string password)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    usersHash.get(ss.str())->data.orderByNumber.max();
+}
+
+bool BlockChain::searchTx(std::string username, std::string password, std::string to, float amount, std::string date)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    transaction tx(username, to, amount, date);
+    return usersHash.get(ss.str())->data.search(tx);
+}
+
 /*viewMyBlockDateRange*/
 /*viewMyBlockAmountRange*/
 

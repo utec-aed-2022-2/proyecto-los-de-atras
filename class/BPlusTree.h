@@ -20,6 +20,9 @@ public:
     /*remove section*/
     bool search(T key);
 
+    void min() const;
+    void max() const;
+
 private:
     int find_index(T* arr, T key, size_t len) const;
     nodeBPlus<T>* find_node(nodeBPlus<T>* node, T key) const;
@@ -289,6 +292,22 @@ void BPlusTree<T>::insert(T key)
 }
 
 /*remove section*/
+
+template <typename T>
+void BPlusTree<T>::min() const
+{
+    nodeBPlus<T>* cursor = this->root;
+    while (!(*cursor).is_leaf) { cursor = (*cursor).children[0]; }
+    std::cout << cursor->data[0] << std::endl;
+}
+
+template <typename T>
+void BPlusTree<T>::max() const
+{
+    nodeBPlus<T>* cursor = this->root;
+    while (!(*cursor).is_leaf) { cursor = (*cursor).children[cursor->size]; }
+    std::cout << cursor->data[cursor->size-1] << std::endl;
+}
 
 template <typename T>
 bool BPlusTree<T>::search(T key) { return search_node(this->root, key) != nullptr; }
