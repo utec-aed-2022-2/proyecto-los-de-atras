@@ -13,7 +13,7 @@ struct nodeList
 
     nodeList() = default;
     ~nodeList() = default;
-    nodeList(const T& data, nodeList<T>* next = nullptr, nodeList<T>* prev = nullptr): data(data), next(next), prev(prev) {}
+    nodeList(T data, nodeList<T>* next = nullptr, nodeList<T>* prev = nullptr): data(data), next(next), prev(prev) {}
 };
 
 template <typename K, typename V>
@@ -23,7 +23,7 @@ struct nodeHash
 	K key;
     nodeHash() = default;
     ~nodeHash() = default;
-	nodeHash(const K& key, const V& value): key(key), value(value) {}
+	nodeHash(K key, V value): key(key), value(value) {}
 };
 
 template <typename T>

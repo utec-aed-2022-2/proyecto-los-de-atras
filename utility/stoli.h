@@ -1,6 +1,6 @@
 #pragma once
-#ifndef STRINGTOLONG_H
-#define STRINGTOLONG_H
+#ifndef STOLI_H
+#define STOLI_H
 #include <iostream>
 #include <cstring>
 #include <string>

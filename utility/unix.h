@@ -1,5 +1,6 @@
-#ifndef UNIXTODATE_H
-#define UNIXTODATE_H
+#pragma once
+#ifndef UNIX_H
+#define UNIX_H
 #include <iostream>
 #include <cstring>
 #include <string>

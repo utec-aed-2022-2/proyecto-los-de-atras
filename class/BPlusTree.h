@@ -15,35 +15,44 @@ private:
 public:
     BPlusTree();
     ~BPlusTree();
+    BPlusTree(size_t maxchildren);
     BPlusTree(size_t maxchildren, std::function<bool(const T&, const T&)> less, std::function<bool(const T&, const T&)> greater);
 
     nodeBPlus<T>* GetRoot() const;
-    void insert(const T& key);
+    void insert(T key);
     /*remove section*/
-    bool search(const T& key);
-
-    void min() const;
-    void max() const;
+    bool search(T key);
+    T min() const;
+    T max() const;
 
 private:
-    int find_index(T* arr, const T& key, size_t len) const;
-    nodeBPlus<T>* find_node(nodeBPlus<T>* node, const T& key) const;
-    T* item_insert(T* arr, const T& key, size_t len);
+    int find_index(T* arr, T key, size_t len) const;
+    nodeBPlus<T>* find_node(nodeBPlus<T>* node, T key) const;
+    T* item_insert(T* arr, T key, size_t len);
     nodeBPlus<T>** child_insert(nodeBPlus<T>** childArr, nodeBPlus<T>*child, size_t len, int index);
-    nodeBPlus<T>* child_item_insert(nodeBPlus<T>* node, nodeBPlus<T>* child, const T& key);
-    void insertR(nodeBPlus<T>* node, nodeBPlus<T>* child, const T& key);
+    nodeBPlus<T>* child_item_insert(nodeBPlus<T>* node, nodeBPlus<T>* child, T key);
+    void insertR(nodeBPlus<T>* node, nodeBPlus<T>* child, T key);
     /*remove section*/
-    nodeBPlus<T>* search_node(nodeBPlus<T>* node, const T& key);
+    nodeBPlus<T>* search_node(nodeBPlus<T>* node, T key);
     void clear(nodeBPlus<T>* node);
 };
-
-template <typename T>
-BPlusTree<T>::~BPlusTree() { clear(this->root); }
 
 template <typename T>
 BPlusTree<T>::BPlusTree()
 {
     this->maxchildren = 5;
+    this->root = nullptr;
+    this->less = [](const T& first, const T& second) { return first < second; };
+    this->greater = [](const T& first, const T& second) { return second < first; };
+}
+
+template <typename T>
+BPlusTree<T>::~BPlusTree() { clear(this->root); }
+
+template <typename T>
+BPlusTree<T>::BPlusTree(size_t maxchildren)
+{
+    this->maxchildren = maxchildren;
     this->root = nullptr;
     this->less = [](const T& first, const T& second) { return first < second; };
     this->greater = [](const T& first, const T& second) { return second < first; };
@@ -59,7 +68,7 @@ BPlusTree<T>::BPlusTree(size_t maxchildren, std::function<bool(const T&, const T
 }
 
 template <typename T>
-int BPlusTree<T>::find_index(T* arr, const T& key, size_t len) const
+int BPlusTree<T>::find_index(T* arr, T key, size_t len) const
 {
     int index = 0;
     for (int i = 0; i < len; i++)
@@ -79,7 +88,7 @@ int BPlusTree<T>::find_index(T* arr, const T& key, size_t len) const
 }
 
 template <typename T>
-nodeBPlus<T>* BPlusTree<T>::find_node(nodeBPlus<T>* node, const T& key) const
+nodeBPlus<T>* BPlusTree<T>::find_node(nodeBPlus<T>* node, T key) const
 {
     if (node == nullptr) { return nullptr; }
     else
@@ -105,8 +114,9 @@ nodeBPlus<T>* BPlusTree<T>::find_node(nodeBPlus<T>* node, const T& key) const
     }
 }
 
+
 template <typename T>
-T* BPlusTree<T>::item_insert(T* arr, const T& key, size_t len)
+T* BPlusTree<T>::item_insert(T* arr, T key, size_t len)
 {
     int index = find_index(arr, key, len);
     for(int i = len; i > index; i--)
@@ -126,7 +136,7 @@ nodeBPlus<T>** BPlusTree<T>::child_insert(nodeBPlus<T>** childArr, nodeBPlus<T>*
 }
 
 template <typename T>
-nodeBPlus<T>* BPlusTree<T>::child_item_insert(nodeBPlus<T>* node, nodeBPlus<T>* child, const T& key)
+nodeBPlus<T>* BPlusTree<T>::child_item_insert(nodeBPlus<T>* node, nodeBPlus<T>* child, T key)
 {
     int itemIndex = find_index(node->data, key, node->size);
     int childIndex = find_index(node->data, key, node->size) + 1;
@@ -138,7 +148,7 @@ nodeBPlus<T>* BPlusTree<T>::child_item_insert(nodeBPlus<T>* node, nodeBPlus<T>* 
 }
 
 template <typename T>
-void BPlusTree<T>::insertR(nodeBPlus<T>* node, nodeBPlus<T>* child, const T& key)
+void BPlusTree<T>::insertR(nodeBPlus<T>* node, nodeBPlus<T>* child, T key)
 {
     nodeBPlus<T>* iterator = node;
     if (iterator->size < this->maxchildren-1)
@@ -206,7 +216,7 @@ void BPlusTree<T>::insertR(nodeBPlus<T>* node, nodeBPlus<T>* child, const T& key
 /*remove section*/
 
 template <typename T>
-nodeBPlus<T>* BPlusTree<T>::search_node(nodeBPlus<T>* node, const T& key)
+nodeBPlus<T>* BPlusTree<T>::search_node(nodeBPlus<T>* node, T key)
 {
     nodeBPlus<T>* iterator = find_node(node, key);
     for (int i = 0; i < iterator->size; i++) { if (iterator->data[i] == key) { return iterator; } }
@@ -229,7 +239,7 @@ template <typename T>
 nodeBPlus<T>* BPlusTree<T>::GetRoot() const { return this->root; }
 
 template <typename T>
-void BPlusTree<T>::insert(const T& key)
+void BPlusTree<T>::insert(T key)
 {
     if (this->root == nullptr)
     {
@@ -300,23 +310,23 @@ void BPlusTree<T>::insert(const T& key)
 /*remove section*/
 
 template <typename T>
-void BPlusTree<T>::min() const
+bool BPlusTree<T>::search(T key) { return search_node(this->root, key) != nullptr; }
+
+template <typename T>
+T BPlusTree<T>::min() const
 {
     nodeBPlus<T>* cursor = this->root;
     while (!(*cursor).is_leaf) { cursor = (*cursor).children[0]; }
-    std::cout << cursor->data[0] << std::endl;
+    return cursor->data[0];
 }
 
 template <typename T>
-void BPlusTree<T>::max() const
+T BPlusTree<T>::max() const
 {
     nodeBPlus<T>* cursor = this->root;
     while (!(*cursor).is_leaf) { cursor = (*cursor).children[cursor->size]; }
-    std::cout << cursor->data[cursor->size-1] << std::endl;
+    return cursor->data[cursor->size-1];
 }
-
-template <typename T>
-bool BPlusTree<T>::search(const T& key) { return search_node(this->root, key) != nullptr; }
 
 template <typename T>
 void coutOrder(nodeBPlus<T>* cursor)

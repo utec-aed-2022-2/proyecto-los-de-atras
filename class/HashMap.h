@@ -18,12 +18,12 @@ public:
 	~HashMap();
 	HashMap(size_t capacity);
 
-	void set(const K& key, const V& value);
-	V get(const K& key);
+	void set(K key, V value);
+	V get(K key);
 	/*remove section*/
 
 private:
-	int hashFunction(const K& key);
+	int hashFunction(K key);
 	double fillFactor();
 	void rehashing();
 };
@@ -38,7 +38,11 @@ HashMap<K, V>::HashMap()
 }
 
 template <typename K, typename V>
-HashMap<K, V>::~HashMap() {}
+HashMap<K, V>::~HashMap() 
+{
+	for (int i = 0; i < capacity; i++) { delete array[i]; }
+	delete array;
+}
 
 template <typename K, typename V>
 HashMap<K, V>::HashMap(size_t capacity)
@@ -50,7 +54,7 @@ HashMap<K, V>::HashMap(size_t capacity)
 }
 
 template <typename K, typename V>
-void HashMap<K, V>::set(const K& key, const V& value)
+void HashMap<K, V>::set(K key, V value)
 {
 	if(fillFactor() >= maxFillFactor) { rehashing(); }
 
@@ -68,7 +72,7 @@ void HashMap<K, V>::set(const K& key, const V& value)
 }
 
 template <typename K, typename V>
-V HashMap<K, V>::get(const K& key)
+V HashMap<K, V>::get(K key)
 {
 	int hashIndex = hashFunction(key);
 	int counter = 0;
@@ -85,7 +89,7 @@ V HashMap<K, V>::get(const K& key)
 }
 
 template <typename K, typename V>
-int HashMap<K, V>::hashFunction(const K& key)
+int HashMap<K, V>::hashFunction(K key)
 {
 	std::hash<K> ptr_hash;
 	return ptr_hash(key)%capacity;
