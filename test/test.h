@@ -1,4 +1,4 @@
-#include "../base/BlockChain.h"
+#include "Blockchain.h"
 
 void test1()
 {
@@ -32,24 +32,24 @@ void test2()
     bch.createUser("aaron", "soyunaautomata");
     bch.createUser("luis", "abajoloshaitianos");
 
-    bch.setTx("fernando", "meiniet", "carlos", 200);
+    // bch.setTx("fernando", "meiniet", "carlos", 200);
     bch.setTx("fernando", "meiniet", "alexis", 2200, "1656620824");
     bch.setTx("fernando", "meiniet", "juan", 500, "1645827356");
     bch.setTx("fernando", "meiniet", "luis", 870, "1645827359");
 
-    bch.setTx("carlos", "mono0winrate", "aaron", 568);
+    // bch.setTx("carlos", "mono0winrate", "aaron", 568);
     bch.setTx("carlos", "mono0winrate", "luis", 98, "1656620824");
     bch.setTx("carlos", "mono0winrate", "alexis", 12, "1656620424");
 
-    bch.setTx("luis", "abajoloshaitianos", "carlos", 200);
+    // bch.setTx("luis", "abajoloshaitianos", "carlos", 200);
     bch.setTx("luis", "abajoloshaitianos", "aaron", 2200, "1638720040");
 
-    bch.setTx("nicolas", "yaacaboelciclo", "carlos", 200);
+    // bch.setTx("nicolas", "yaacaboelciclo", "carlos", 200);
     bch.setTx("nicolas", "yaacaboelciclo", "alexis", 2200, "1656620821");
     bch.setTx("nicolas", "yaacaboelciclo", "juandiego", 500, "1645827396");
     bch.setTx("nicolas", "yaacaboelciclo", "luis", 870, "1651343075");
-    bch.setTx("nicolas", "yaacaboelciclo", "aaron", 568);
-    bch.setTx("nicolas", "yaacaboelciclo", "carlos", 200);
+    // bch.setTx("nicolas", "yaacaboelciclo", "aaron", 568);
+    // bch.setTx("nicolas", "yaacaboelciclo", "carlos", 200);
     bch.setTx("nicolas", "yaacaboelciclo", "fernando", 2200, "1642303044");
 
     bch.setTx("aaron", "soyunaautomata", "nicolas", 938, "1657604037");

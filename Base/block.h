@@ -13,8 +13,8 @@ const uint64_t nonceDefaul = -1;
 
 struct block
 {
-    std::uint64_t id;
-    std::uint64_t nonce;
+    std::uint64_t id {};
+    std::uint64_t nonce {};
     DoubleList<transaction> data;
     HashMap<std::string, transaction*> dataHash;
     BPlusTree<transaction> orderByDate{
@@ -68,6 +68,7 @@ struct block
     block(const block &other);
     block& operator=(const block &other);
     void insert(transaction tx);
+    void writeBlock(std::ostream& os);
     /*remove section*/
     bool search(transaction tx);
     void coutOrderByDate() const;
@@ -221,6 +222,13 @@ std::ostream& operator<<(std::ostream& os, const block& b)
     os << "prev: " << b.prevHash << std::endl;
     os << "current: " << b.hash << std::endl;
     return os;
+}
+
+void block::writeBlock(std::ostream& os) {
+    for (int i = 0; i < data.size(); i++) {
+        data[i].writeTransaccion(os);
+        os << std::endl;
+    }
 }
 
 #endif

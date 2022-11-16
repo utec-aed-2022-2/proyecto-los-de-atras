@@ -1,6 +1,8 @@
 #pragma once
 #ifndef BLOCKCHAIN_H
 #define BLOCKCHAIN_H
+
+#include <fstream>
 #include "block.h"
 
 class Blockchain
@@ -10,39 +12,62 @@ private:
     HashMap<std::string, nodeList<block*>*> usersHash;
     BPlusTree<transaction> allOrderByDate{
         BPlusTree<transaction>(
-        23, 
+        23,
         [](const transaction& first, const transaction& second){ return first.date < second.date;},
         [](const transaction& first, const transaction& second){ return second.date < first.date;}
         )
     };
     BPlusTree<transaction> allOrderByNumber{
         BPlusTree<transaction>(
-        23, 
+        23,
         [](const transaction& first, const transaction& second){ return first.number < second.number;},
         [](const transaction& first, const transaction& second){ return second.number < first.number;}
         )
     };
 
 public:
-    void createUser(std::string username, std::string password);
+    Blockchain() = default;
+    explicit Blockchain(const std::string& usersPath, const std::string& transactionsPath) {
+        std::string line;
+        auto* file = new std::ifstream(usersPath);
+        std::getline(*file, line, '\n');
+        std::string username {}, password {};
+
+        while ((*file) >> username >> password) {
+            createUser(username, password);
+        }
+        file->close();
+
+        file = new std::ifstream(transactionsPath);
+        std::getline(*file, line, '\n');
+        std::string from, to, date, ammount;
+
+        while ((*file) >> from >> password >> to >> ammount >> date) {
+            setTx(from, password, to, std::stof(ammount), date);
+        }
+        file->close();
+    }
+
+    void createUser(const std::string& username, const std::string& password);
     void viewAll();
-    void viewMyBlock(std::string username, std::string password);
-    void viewMyBlockDate(std::string username, std::string password);
-    void viewMyBlockAmount(std::string username, std::string password);
-    void viewMinTxDate(std::string username, std::string password);
-    void viewMaxTxDate(std::string username, std::string password);
-    void viewMinTxAmount (std::string username, std::string password);
-    void viewMaxTxAmount (std::string username, std::string password);
-    bool searchTx(std::string username, std::string password, std::string to, float amount, std::string date);
+    void viewMyBlock(const std::string& username, const std::string& password);
+    void writeMyBlock(std::ostream& os, const std::string& username, const std::string& password);
+    void viewMyBlockDate(const std::string& username, const std::string& password);
+    void viewMyBlockAmount(const std::string& username, const std::string& password);
+    void viewMinTxDate(const std::string& username, const std::string& password);
+    void viewMaxTxDate(const std::string& username, const std::string& password);
+    void viewMinTxAmount (const std::string& username, const std::string& password);
+    void viewMaxTxAmount (const std::string& username, const std::string& password);
+    bool searchTx(const std::string& username, const std::string& password, std::string to, float amount, std::string date);
     /*viewMyBlockDateRange*/
     /*viewMyBlockAmountRange*/
-    void setTx(std::string username, std::string password, std::string to, float amount);
-    void setTx(std::string username, std::string password, std::string to, float amount, std::string date);
+    void setTx(const std::string& username, const std::string& password, std::string to, float amount);
+    void setTx(const std::string& username, const std::string& password, std::string to, float amount, std::string date);
 
-    void mineCascade(std::string username, std::string password);
+    void mineCascade(const std::string& username, const std::string& password);
 };
 
-void Blockchain::createUser(std::string username, std::string password)
+void Blockchain::createUser(const std::string& username, const std::string& password)
 {
     if (chain.is_empty())
     {
@@ -68,52 +93,57 @@ void Blockchain::viewAll()
     }    
 }
 
-void Blockchain::viewMyBlock(std::string username, std::string password)
+void Blockchain::writeMyBlock(std::ostream& os, const std::string& username, const std::string& password) {
+    std::stringstream ss; ss<<username; ss <<password;
+    usersHash.get(ss.str())->data->writeBlock(os);
+}
+
+void Blockchain::viewMyBlock(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     std::cout << "username[ " << username << " ]" << std::endl;
-    std::cout << usersHash.get(ss.str())->data;
+    std::cout << *usersHash.get(ss.str())->data;
 }
 
-void Blockchain::viewMyBlockDate(std::string username, std::string password)
+void Blockchain::viewMyBlockDate(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     std::cout << "username[ " << username << " ]" << std::endl;
     usersHash.get(ss.str())->data->coutOrderByDate(); 
 }
 
-void Blockchain::viewMyBlockAmount(std::string username, std::string password)
+void Blockchain::viewMyBlockAmount(const std::string& username, const std::string& password)
 { 
     std::stringstream ss; ss<<username; ss<<password;
     std::cout << "username[ " << username << " ]" << std::endl;
     usersHash.get(ss.str())->data->coutOrderByNumber();
 }
 
-void Blockchain::viewMinTxDate(std::string username, std::string password)
+void Blockchain::viewMinTxDate(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     usersHash.get(ss.str())->data->coutMinTxDate();
 }
 
-void Blockchain::viewMaxTxDate(std::string username, std::string password)
+void Blockchain::viewMaxTxDate(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     usersHash.get(ss.str())->data->coutMaxTxDate();
 }
 
-void Blockchain::viewMinTxAmount(std::string username, std::string password)
+void Blockchain::viewMinTxAmount(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     usersHash.get(ss.str())->data->coutMinTxNumber();
 }
 
-void Blockchain::viewMaxTxAmount(std::string username, std::string password)
+void Blockchain::viewMaxTxAmount(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     usersHash.get(ss.str())->data->coutMaxTxNumber();
 }
 
-bool Blockchain::searchTx(std::string username, std::string password, std::string to, float amount, std::string date)
+bool Blockchain::searchTx(const std::string& username, const std::string& password, std::string to, float amount, std::string date)
 {
     std::stringstream ss; ss<<username; ss<<password;
     transaction tx(username, to, amount, date);
@@ -123,7 +153,7 @@ bool Blockchain::searchTx(std::string username, std::string password, std::strin
 /*viewMyBlockDateRange*/
 /*viewMyBlockAmountRange*/
 
-void Blockchain::setTx(std::string username, std::string password, std::string to, float amount)
+void Blockchain::setTx(const std::string& username, const std::string& password, std::string to, float amount)
 {   
     std::stringstream ss; ss<<username; ss<<password;
     const auto p1 = std::chrono::system_clock::now();
@@ -145,7 +175,7 @@ void Blockchain::setTx(std::string username, std::string password, std::string t
     }
 }
 
-void Blockchain::setTx(std::string username, std::string password, std::string to, float amount, std::string date)
+void Blockchain::setTx(const std::string& username, const std::string& password, std::string to, float amount, std::string date)
 {   
     std::stringstream ss; ss<<username; ss<<password;
     transaction tx(username, to, amount, date);
@@ -164,7 +194,7 @@ void Blockchain::setTx(std::string username, std::string password, std::string t
     }
 }
 
-void Blockchain::mineCascade(std::string username, std::string password)
+void Blockchain::mineCascade(const std::string& username, const std::string& password)
 {
     std::stringstream ss; ss<<username; ss<<password;
     usersHash.get(ss.str())->data->mine();

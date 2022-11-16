@@ -58,7 +58,7 @@ void HashMap<K, V>::set(K key, V value)
 {
 	if(fillFactor() >= maxFillFactor) { rehashing(); }
 
-	nodeHash<K, V>* newNode = new nodeHash<K, V>(key, value);
+	auto* newNode = new nodeHash<K, V>(key, value);
 	int hashIndex = hashFunction(key);
 
 	while (array[hashIndex] != nullptr && array[hashIndex]->key != key)

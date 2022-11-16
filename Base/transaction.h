@@ -17,6 +17,7 @@ struct transaction
     ~transaction() = default;
     transaction(std::string string1, std::string string2, float number, std::string date);
     transaction(const transaction &other);
+    void writeTransaccion(std::ostream& os);
 
     transaction& operator=(const transaction &other);
     friend std::ostream& operator<<(std::ostream& os, const transaction& tx);
@@ -52,8 +53,15 @@ transaction& transaction::operator=(const transaction &other)
 
 std::ostream& operator<<(std::ostream& os, const transaction& tx)
 {
-    os << "(" << tx.string1 << " , " << tx.string2 << ", " << tx.number << ", " << unixTimeToHumanReadable(stoli(tx.date)) << ")";
+    std::time_t unixTimestamp(std::stol(tx.date));
+    std::string date = std::asctime(std::localtime(&unixTimestamp));
+
+    os << "(" << tx.string1 << " , " << tx.string2 << ", " << tx.number << ", " << date.substr(0, 24) << ")";
     return os;
+}
+
+void transaction::writeTransaccion(std::ostream& os) {
+    os << string1 << " " << string2 << " " << number << " " << date;
 }
 
 bool transaction::operator==(transaction const& other) { return string1 == other.string1 && string2 == other.string2 && number == other.number && date == other.date; }

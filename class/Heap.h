@@ -51,7 +51,7 @@ Heap<T, activate>::Heap()
 }
 
 template<typename T, bool activate>
-Heap<T, activate>::~Heap() { delete A; }
+Heap<T, activate>::~Heap() { delete[] A; }
 
 template<typename T, bool activate>
 Heap<T, activate>::Heap(size_t capacity)
