@@ -4,46 +4,78 @@
 #include <iostream>
 #include <functional>
 
+namespace nl
+{
 template<typename T>
-struct nodeList
+struct node
 {
     T data;
-    nodeList<T>* next;
-    nodeList<T>* prev;
+    node<T>* next;
+    node<T>* prev;
 
-    nodeList() = default;
-    ~nodeList() = default;
-    nodeList(T data, nodeList<T>* next = nullptr, nodeList<T>* prev = nullptr): data(data), next(next), prev(prev) {}
+    node() = default;
+    ~node() = default;
+    explicit node(T data, node<T>* next = nullptr, node<T>* prev = nullptr);
 };
 
-template <typename K, typename V>
-struct nodeHash
+template<typename T>
+node<T>::node(T data, node<T>* next, node<T>* prev)
 {
-	V value;
-	K key;
-    nodeHash() = default;
-    ~nodeHash() = default;
-	nodeHash(K key, V value): key(key), value(value) {}
+    this->data = data;
+    this->next = next;
+    this->prev = prev;
+}
+}
+
+namespace nh
+{
+template<typename TK, typename TV>
+struct node
+{
+    TV value;
+    TK key;
+
+    node() = default;
+    ~node() = default;
+    node(TK key, TV value);
 };
 
+template<typename TK, typename TV>
+node<TK, TV>::node(TK key, TV value)
+{
+    this->key = key;
+    this->value = value;
+}
+}
+
+namespace nbpt
+{
 template <typename T>
-struct nodeBPlus
+struct node
 {
     bool is_leaf;
     size_t maxchildren;
     size_t size;
     T* data;
-    nodeBPlus<T>** children;
-    nodeBPlus<T>* parent;
+    node<T>** children;
+    node<T>* parent;
 
-    nodeBPlus() = default;
-    ~nodeBPlus() = default;
-    nodeBPlus(size_t maxchildren): is_leaf(false), maxchildren(maxchildren), size(0), parent(nullptr)
-    {
-        this->data = new T[maxchildren-1];
-        this->children = new nodeBPlus<T>*[maxchildren];
-        for(int i = 0; i < maxchildren; i++){ this->children[i] = nullptr; }
-    }
+    node() = default;
+    ~node() = default;
+    explicit node(size_t maxchildren);
 };
+
+template <typename T>
+node<T>::node(size_t maxchildren)
+{
+    this->is_leaf = false;
+    this->maxchildren = maxchildren;
+    this->size = 0;
+    this->parent = nullptr;
+    this->data = new T[maxchildren-1];
+    this->children = new node<T>*[maxchildren];
+    for(int i = 0; i < maxchildren; i++){ this->children[i] = nullptr; }
+}
+}
 
 #endif

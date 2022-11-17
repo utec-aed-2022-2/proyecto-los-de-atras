@@ -2,6 +2,7 @@
 #ifndef HEAP_H
 #define HEAP_H
 #include "../utility/swap.h"
+#include "DoubleList.h"
 
 template<typename T, bool activate = false>
 class Heap
@@ -12,22 +13,32 @@ private:
     size_t size;
     std::function<bool(const T&, const T&)> less;
     std::function<bool(const T&, const T&)> greater;
+    std::function<bool(const T&, const T&)> equal;
 
 public:
     Heap();
     ~Heap();
-    Heap(size_t capacity);
-    Heap(size_t capacity, std::function<bool(const T&, const T&)> less, std::function<bool(const T&, const T&)> greater);
+    explicit Heap(size_t capacity);
+    Heap(size_t capacity, std::function<bool(const T&, const T&)> less, std::function<bool(const T&, const T&)> greater, std::function<bool(const T&, const T&)> equal);
+
+    void print()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            std::cout << A[i] << " ";
+        }
+    }
 
     void push(T key);
     void pop();
     T top() const;
-    bool empty() const;
+    DoubleList<T> topRange();
+    [[nodiscard]] bool empty() const;
 
 private:
-    int PARENT(int index) const;
-    int LEFT(int index) const;
-    int RIGHT(int index) const;
+    [[nodiscard]] int PARENT(int index) const;
+    [[nodiscard]] int LEFT(int index) const;
+    [[nodiscard]] int RIGHT(int index) const;
     void heapifyDown(int index);
     void heapifyUp(int index);
 };
@@ -38,15 +49,17 @@ Heap<T, activate>::Heap()
     this->capacity = 7;
     this->size = 0;
     this->A = new T[7];
-    if (activate == false)
+    if (!activate)
     {
         this->less = [](const T& first, const T& second) { return first < second; };
         this->greater = [](const T& first, const T& second) { return second < first; };
+        this->equal = [](const T& first, const T& second) { return second == first; };
     }
     else
     {
         this->less = [](const T& first, const T& second) { return second < first; };
         this->greater = [](const T& first, const T& second) { return first < second; };
+        this->equal = [](const T& first, const T& second) { return second == first; };
     }
 }
 
@@ -59,7 +72,7 @@ Heap<T, activate>::Heap(size_t capacity)
     this->capacity = capacity;
     this->size = 0;
     this->A = new T[capacity];
-    if (activate == false)
+    if (!activate)
     {
         this->less = [](const T& first, const T& second) { return first < second; };
         this->greater = [](const T& first, const T& second) { return second < first; };
@@ -69,15 +82,16 @@ Heap<T, activate>::Heap(size_t capacity)
         this->less = [](const T& first, const T& second) { return second < first; };
         this->greater = [](const T& first, const T& second) { return first < second; };
     }
+    this->equal = [](const T& first, const T& second) { return second == first; };
 }
 
 template<typename T, bool activate>
-Heap<T, activate>::Heap(size_t capacity, std::function<bool(const T&, const T&)> less, std::function<bool(const T&, const T&)> greater)
+Heap<T, activate>::Heap(size_t capacity, std::function<bool(const T&, const T&)> less, std::function<bool(const T&, const T&)> greater, std::function<bool(const T&, const T&)> equal)
 {
     this->capacity = capacity;
     this->size = 0;
     this->A = new T[capacity];
-    if (activate == false)
+    if (!activate)
     {
         this->less = less;
         this->greater = greater;
@@ -85,8 +99,9 @@ Heap<T, activate>::Heap(size_t capacity, std::function<bool(const T&, const T&)>
     else
     {
         this->less = greater;
-        this->greater = less; 
+        this->greater = less;
     }
+    this->equal = equal;
 }
 
 template<typename T, bool activate>
@@ -94,12 +109,11 @@ void Heap<T, activate>::push(T key)
 {
     if (size == capacity)
     {
-        T* prevA = A;
         size_t prevCapacity = capacity;
+        T* prevA = A;
         capacity = capacity*2;
         A = new T[capacity];
         for (int i = 0; i < prevCapacity; i++) { A[i] = prevA[i]; }
-        delete prevA;
     }
 
     A[size] = key;
@@ -122,6 +136,14 @@ T Heap<T, activate>::top() const
 {
     if (size == 0) { throw std::out_of_range("error"); }
     return A[0];
+}
+
+template<typename T, bool activate>
+DoubleList<T> Heap<T, activate>::topRange()
+{
+    DoubleList<T> dl;
+    for (int i = 0; i < size; i++) { if (equal(A[0], A[i])) { dl.push_back(A[i]); } }
+    return dl;
 }
 
 template<typename T, bool activate>
