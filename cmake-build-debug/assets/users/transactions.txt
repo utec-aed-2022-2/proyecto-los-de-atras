@@ -1,0 +1,17 @@
+origin password destiny amount date
+fernando meiniet alexis 2200 1656620824
+fernando meiniet juan 500 1645827356
+fernando meiniet luis 870 1645827359
+carlos mono0winrate luis 98 1656620824
+carlos mono0winrate alexis 12 1656620424
+nicolas yaacaboelciclo alexis 2200 1656620821
+nicolas yaacaboelciclo luis 870 1651343075
+nicolas yaacaboelciclo fernando 2200 1642303044
+aaron soyunaautomata nicolas 938 1657604037
+juan salesucambiodemalla luis 128 1657604937
+luis abajoloshaitianos fernando 9 1642303030
+luis abajoloshaitianos aaron 2200 1638720040
+aaron soyunaautomata fernando 1000 1668630540
+heider adazzz juan 12000 1668631172
+heider adazzz aaron 543 1668631300
+heider adazzz fernando 15 1668631312
