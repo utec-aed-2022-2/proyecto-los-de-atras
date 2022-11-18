@@ -34,6 +34,8 @@ public:
     block* myBlock(const std::string& username, const std::string& password);
     DoubleList<transaction*> myTxsDate(const std::string& username, const std::string& password);
     DoubleList<transaction*> myTxsAmount(const std::string& username, const std::string& password);
+    DoubleList<transaction*> myTxsDateRange(const std::string& username, const std::string& password, const std::string& start, const std::string& end);
+    DoubleList<transaction*> myTxsAmountRange(const std::string& username, const std::string& password, float start, float end);
     DoubleList<transaction*> myMaxTxD(const std::string& username, const std::string& password);
     DoubleList<transaction*> myMinTxD(const std::string& username, const std::string& password);
     DoubleList<transaction*> myMaxTxA(const std::string& username, const std::string& password);
@@ -79,6 +81,18 @@ DoubleList<transaction*> Blockchain::myTxsAmount(const std::string& username, co
 {
     std::stringstream ss; ss<<username; ss<<password;
     return usersHash.get(ss.str())->data->ObyAtoList();
+}
+
+DoubleList<transaction*> Blockchain::myTxsDateRange(const std::string& username, const std::string& password, const std::string& start, const std::string& end)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    return usersHash.get(ss.str())->data->orderByDate.makeListRange(new transaction{"", "", 0, start}, new transaction{"", "", 0, end});
+}
+
+DoubleList<transaction*> Blockchain::myTxsAmountRange(const std::string& username, const std::string& password, float start, float end)
+{
+    std::stringstream ss; ss<<username; ss<<password;
+    return usersHash.get(ss.str())->data->orderByAmount.makeListRange(new transaction{"", "", start, ""}, new transaction{"", "", end, ""});
 }
 
 DoubleList<transaction*> Blockchain::myMaxTxD(const std::string& username, const std::string& password)

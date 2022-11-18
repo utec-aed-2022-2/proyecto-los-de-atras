@@ -84,6 +84,8 @@ struct block
 
     DoubleList<transaction*> ObyDtoList();
     DoubleList<transaction*> ObyAtoList();
+    DoubleList<transaction*> ObyDtoListRange(transaction* txStart, transaction* txEnd);
+    DoubleList<transaction*> ObyAtoListRange(transaction* txStart, transaction* txEnd);
     DoubleList<transaction*> maxTxD();
     DoubleList<transaction*> minTxD();
     DoubleList<transaction*> maxTxA();
@@ -198,9 +200,13 @@ std::ostream& operator<<(std::ostream& os, const block& b)
     return os;
 }
 
-DoubleList<transaction*> block::ObyDtoList() { return makeList(orderByDate.GetRoot()); }
+DoubleList<transaction*> block::ObyDtoList() { return orderByDate.makeList(); }
 
-DoubleList<transaction*> block::ObyAtoList() { return makeList(orderByAmount.GetRoot()); }
+DoubleList<transaction*> block::ObyAtoList() { return orderByAmount.makeList(); }
+
+DoubleList<transaction*> block::ObyDtoListRange(transaction* txStart, transaction* txEnd) { return orderByDate.makeListRange(txStart, txEnd); }
+
+DoubleList<transaction*> block::ObyAtoListRange(transaction* txStart, transaction* txEnd) { return orderByAmount.makeListRange(txStart, txEnd); }
 
 DoubleList<transaction*> block::maxTxD() { return maxTxDate.topRange(); }
 

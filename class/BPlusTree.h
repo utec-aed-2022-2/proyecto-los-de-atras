@@ -26,6 +26,8 @@ public:
     nbpt::node<T>* GetRoot() const;
     T min() const;
     T max() const;
+    DoubleList<T> makeList();
+    DoubleList<T> makeListRange(T start, T end);
 
 private:
     int find_index(T* arr, T key, size_t len);
@@ -36,6 +38,7 @@ private:
     void insertR(nbpt::node<T>* node, nbpt::node<T>* child, T key);
     /*remove section*/
     nbpt::node<T>* search_node(nbpt::node<T>* node, T key);
+    void makeList(nbpt::node<T>* cursor, DoubleList<T>& list);
     void clear(nbpt::node<T>* node);
 };
 
@@ -229,6 +232,14 @@ nbpt::node<T>* BPlusTree<T>::search_node(nbpt::node<T>* node, T key)
 }
 
 template <typename T>
+void BPlusTree<T>::makeList(nbpt::node<T>* cursor, DoubleList<T>& list)
+{
+    while (!(*cursor).is_leaf) { cursor = (*cursor).children[0]; }
+    for (int i = 0; i < (*cursor).size; i++) { list.push_back((*cursor).data[i]); }
+    if ((*cursor).children[(*cursor).size] != nullptr) { makeList((*cursor).children[(*cursor).size], list); }
+}
+
+template <typename T>
 void BPlusTree<T>::clear(nbpt::node<T>* node)
 {
     if (node != nullptr)
@@ -323,9 +334,6 @@ T BPlusTree<T>::min() const
 }
 
 template <typename T>
-nbpt::node<T>* BPlusTree<T>::GetRoot() const { return this->root; }
-
-template <typename T>
 T BPlusTree<T>::max() const
 {
     nbpt::node<T>* cursor = this->root;
@@ -334,27 +342,42 @@ T BPlusTree<T>::max() const
 }
 
 template <typename T>
+nbpt::node<T>* BPlusTree<T>::GetRoot() const { return this->root; }
+
+template <typename T>
+DoubleList<T> BPlusTree<T>::makeList()
+{
+    DoubleList<T> dl;
+    makeList(this->GetRoot(), dl);
+    return dl;
+}
+
+template <typename T>
+DoubleList<T> BPlusTree<T>::makeListRange(T start, T end)
+{
+    DoubleList<T> dl;
+    nbpt::node<T>* startNode = find_node(this->GetRoot(), start);
+    nbpt::node<T>* cursor = startNode;
+    T temp= cursor->data[0];
+    while (less(temp, end) || equal(temp, end))
+    {
+        if (cursor == nullptr) { break; }
+        for (int i = 0; i < cursor->size; i++)
+        {
+            temp = cursor->data[i];
+            if ((greater(temp, start) || equal(temp, start)) && (less(temp, end) || equal(temp, end))) { dl.push_back(temp); }
+        }
+        cursor = cursor->children[cursor->size];
+    }
+    return dl;
+}
+
+template <typename T>
 void coutOrder(nbpt::node<T>* cursor)
 {
     while (!(*cursor).is_leaf) { cursor = (*cursor).children[0]; }
     for (int i = 0; i < (*cursor).size; i++) { std::cout << (*cursor).data[i] << std::endl; }
     if ((*cursor).children[(*cursor).size] != nullptr) { coutOrder((*cursor).children[(*cursor).size]); }
-}
-
-template <typename T>
-void makeList(nbpt::node<T>* cursor, DoubleList<T>& list)
-{
-    while (!(*cursor).is_leaf) { cursor = (*cursor).children[0]; }
-    for (int i = 0; i < (*cursor).size; i++) { list.push_back((*cursor).data[i]); }
-    if ((*cursor).children[(*cursor).size] != nullptr) { makeList((*cursor).children[(*cursor).size], list); }
-}
-
-template <typename T>
-DoubleList<T> makeList(nbpt::node<T>* cursor)
-{
-    DoubleList<T> dl;
-    makeList(cursor, dl);
-    return dl;
 }
 
 #endif

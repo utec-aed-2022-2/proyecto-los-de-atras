@@ -47,6 +47,8 @@ void test()
 
     //std::cout << bch;
 
-    DoubleList<transaction*> txs = bch.myTxsAmount("fernando", "meiniet");
-    for (int i = 0; i < txs.SIZE(); i++) { std::cout << *txs[i] << std::endl; }   
+    DoubleList<transaction*> txs1 = bch.myTxsAmountRange("nicolas", "yaacaboelciclo", 500, 10000);
+    DoubleList<transaction*> txs2 = bch.myTxsDateRange("nicolas", "yaacaboelciclo", "1656600000", "1668754242");
+    for (int i = 0; i < txs1.SIZE(); i++) { std::cout << *txs1[i] << std::endl; }
+    for (int i = 0; i < txs2.SIZE(); i++) { std::cout << *txs2[i] << std::endl; }  
 }
