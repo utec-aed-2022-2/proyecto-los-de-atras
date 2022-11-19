@@ -22,7 +22,7 @@ lo importante es que están encadenados mediante hashes.
 
 SHA-256 (Secure Hash Algorithm 256) es un algoritmo (o función) cuyo objetivo es generar hashes 
 o códigos únicos con el que se pudieran asegurar documentos o datos informáticos frente a cualquier
-agente externo que desee modificarlos. una de sus características es que la longitud del hash resultante es siempre igual, sin importar lo extenso que sea el contenido que uses para generar el hash (el resultado siempre es una cadena de 64 de letras y números).
+agente externo que desee modificarlos. Una de sus características es que la longitud del hash resultante es siempre igual, sin importar lo extenso que sea el contenido que uses para generar el hash (el resultado siempre es una cadena de 64 de letras y números).
 
 ![structures](Utils/img/sha256.png)
 
