@@ -15,14 +15,12 @@ std::string dateToUnixTimestamp(const std::string& strDate) // date = "dd/mm/yyy
     int min = std::stoi(strDate.substr(14, 2));
     int sec = std::stoi(strDate.substr(17, 2));
 
-    std::cout << year << " " << month << " " << day << " " << hour << " " << min << " " << sec << " unixTimesTamp: ";
-
 	time_t rawtime;
 	struct tm * timeinfo;
 	/* get current timeinfo: */
-	time ( &rawtime ); //or: rawtime = time(0);
+	time (&rawtime); //or: rawtime = time(0);
 	/* convert to struct: */
-	timeinfo = localtime ( &rawtime );
+	timeinfo = localtime( &rawtime );
 	/* now modify the timeinfo to the given date: */
 	timeinfo->tm_year   = year - 1900;
 	timeinfo->tm_mon    = month - 1;    //months since January - [0,11]
@@ -32,7 +30,6 @@ std::string dateToUnixTimestamp(const std::string& strDate) // date = "dd/mm/yyy
 	timeinfo->tm_sec    = sec;          //seconds after the minute - [0,59]
 	/* call mktime: create unix time stamp from timeinfo struct */
 	auto date = timegm( timeinfo );
-    std::cout << std::to_string(date) << std::endl;
 	return std::to_string(date);
 }
 

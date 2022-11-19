@@ -17,7 +17,4 @@ nicolas yaacaboelciclo juan 3000 1668809947
 nicolas yaacaboelciclo juan 223 1668815885
 nicolas yaacaboelciclo luis 10000 1668817671
 nicolas yaacaboelciclo fernando 6400 1668817968
-
 aaron soyunaautomata juan 1000 1668866318
-nicolas yaacaboelciclo aaron 220 1668867539
-nicolas yaacaboelciclo fernando 220 1668867552

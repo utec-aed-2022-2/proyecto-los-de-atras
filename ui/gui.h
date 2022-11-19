@@ -2,8 +2,8 @@
 // Created by Juan Diego on 11/14/2022.
 //
 
-#ifndef SFML_BASICS_GUI_H
-#define SFML_BASICS_GUI_H
+#ifndef BLOCK_CHAIN_GUI_H
+#define BLOCK_CHAIN_GUI_H
 
 #include <SFML/Graphics.hpp>
 
@@ -172,7 +172,12 @@ public:
 
     void loadNewTransaction(const std::string &from, const std::string &password, const std::string &to,
                             const std::string &amount) {
-        time_t unixTimestamp = time(nullptr);
+        time_t curr_time;
+        curr_time = time(nullptr);
+
+        tm *tm_local = localtime(&curr_time);
+        auto unixTimestamp = timegm(tm_local);
+
         std::ofstream outTransactions("./assets/users/transactions.txt", std::ios_base::app);
         outTransactions << from << " " << password << " " << to << " " << amount << " " << unixTimestamp << std::endl;
         this->blockchain->setTx(from, password, to, std::stof(amount), std::to_string(unixTimestamp));
@@ -200,7 +205,7 @@ public:
         Button maxAmount(sf::Color::White, 1130, 270, 50, 110, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
 
         // Botones del date range
-        Button dateRange(sf::Color::Green, 1000, 340, 50, 240, "Date range d/m/y h:m:s", 16, sf::Color::Black);
+        Button dateRange(sf::Color::Green, 1000, 340, 50, 240, "Date range d/m/y h:m:std", 16, sf::Color::Black);
         Button minDate(sf::Color::White, 1000, 410, 25, 240, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
         Button maxDate(sf::Color::White, 1000, 450, 25, 240, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
 
@@ -367,7 +372,7 @@ public:
 
             while (transactionsToShow >> sender >> reciever >> amount >> unixTimestamp) {
                 std::time_t time_t_date(std::stol(unixTimestamp));
-                std::string fullDate = std::asctime(std::localtime(&time_t_date));
+                std::string fullDate = std::asctime(std::gmtime(&time_t_date));
 
                 std::stringstream ss_transaction;
                 ss_transaction << std::left << std::setw(15) << sender << std::left << std::setw(15) << reciever
@@ -633,4 +638,4 @@ public:
     }
 };
 
-#endif //SFML_BASICS_GUI_H
+#endif //BLOCK_CHAIN_GUI_H
