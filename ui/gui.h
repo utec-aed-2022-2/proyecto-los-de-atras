@@ -14,6 +14,7 @@
 
 #include "button.h"
 #include "Blockchain.h"
+#include "utils/unix.h"
 
 enum class options {
     register_,

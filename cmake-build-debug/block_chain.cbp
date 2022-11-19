@@ -45,11 +45,12 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/."/>
-					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/class"/>
-					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/function"/>
-					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/Base"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/classes"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/functions"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/base"/>
 					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/ui"/>
 					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/test"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/utils"/>
 					<Add directory="/usr/include/c++/9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
 					<Add directory="/usr/include/c++/9/backward"/>
@@ -73,11 +74,12 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/."/>
-					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/class"/>
-					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/function"/>
-					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/Base"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/classes"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/functions"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/base"/>
 					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/ui"/>
 					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/test"/>
+					<Add directory="/home/juan-diego/UTEC/CS2023aed/block-chain/utils"/>
 					<Add directory="/usr/include/c++/9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
 					<Add directory="/usr/include/c++/9/backward"/>
@@ -94,37 +96,34 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/Base/Blockchain.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/base/Blockchain.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/Base/block.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/base/block.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/Base/transaction.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/base/transaction.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/BPlusTree.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/classes/BPlusTree.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/DoubleList.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/classes/DoubleList.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/Hash.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/classes/Hash.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/Heap.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/classes/Heap.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/nodes.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/classes/nodes.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/function/hashFunctions.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/functions/hashFunctions.h">
 			<Option target="block_chain"/>
 		</Unit>
 		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/main.cpp">
-			<Option target="block_chain"/>
-		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/test/test.h">
 			<Option target="block_chain"/>
 		</Unit>
 		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/ui/button.h">

@@ -30,13 +30,13 @@ protected:
 
 std::string sha256(const std::string&);
 
-#define R_SHFT(x, n)    (x >> n) //Right shift function
-#define R_ROTATE(x, n)   ((x >> n) | (x << ((sizeof(x) << 3) - n))) //Right rotate function
-#define L_ROTATE(x, n)   ((x << n) | (x >> ((sizeof(x) << 3) - n))) //Left rotate function
-#define CHOICE_OF(x, y, z)  ((x & y) ^ (~x & z)) //function to find choice of
-#define MAJORITY_OF(x, y, z) ((x & y) ^ (x & z) ^ (y & z)) //function to find majority of
-#define SHAF_1(x) (R_ROTATE(x,  2) ^ R_ROTATE(x, 13) ^ R_ROTATE(x, 22)) //sigma rotation function
-#define SHAF_2(x) (R_ROTATE(x,  6) ^ R_ROTATE(x, 11) ^ R_ROTATE(x, 25)) //sigma rotation function
+#define R_SHFT(x, n)    (x >> n) //Right shift functions
+#define R_ROTATE(x, n)   ((x >> n) | (x << ((sizeof(x) << 3) - n))) //Right rotate functions
+#define L_ROTATE(x, n)   ((x << n) | (x >> ((sizeof(x) << 3) - n))) //Left rotate functions
+#define CHOICE_OF(x, y, z)  ((x & y) ^ (~x & z)) //functions to find choice of
+#define MAJORITY_OF(x, y, z) ((x & y) ^ (x & z) ^ (y & z)) //functions to find majority of
+#define SHAF_1(x) (R_ROTATE(x,  2) ^ R_ROTATE(x, 13) ^ R_ROTATE(x, 22)) //sigma rotation functions
+#define SHAF_2(x) (R_ROTATE(x,  6) ^ R_ROTATE(x, 11) ^ R_ROTATE(x, 25)) //sigma rotation functions
 #define SHAF_3(x) (R_ROTATE(x,  7) ^ R_ROTATE(x, 18) ^ R_SHFT(x,  3)) //sigma0 rotation
 #define SHAF_4(x) (R_ROTATE(x, 17) ^ R_ROTATE(x, 19) ^ R_SHFT(x, 10)) //sigma1 rotation
 #define SHAF_UNPACK32(x, str)                       \

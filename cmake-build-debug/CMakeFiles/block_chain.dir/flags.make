@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++2a
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/juan-diego/UTEC/CS2023aed/block-chain/. -I/home/juan-diego/UTEC/CS2023aed/block-chain/class -I/home/juan-diego/UTEC/CS2023aed/block-chain/function -I/home/juan-diego/UTEC/CS2023aed/block-chain/Base -I/home/juan-diego/UTEC/CS2023aed/block-chain/ui -I/home/juan-diego/UTEC/CS2023aed/block-chain/test 
+CXX_INCLUDES = -I/home/juan-diego/UTEC/CS2023aed/block-chain/. -I/home/juan-diego/UTEC/CS2023aed/block-chain/classes -I/home/juan-diego/UTEC/CS2023aed/block-chain/functions -I/home/juan-diego/UTEC/CS2023aed/block-chain/base -I/home/juan-diego/UTEC/CS2023aed/block-chain/ui -I/home/juan-diego/UTEC/CS2023aed/block-chain/test -I/home/juan-diego/UTEC/CS2023aed/block-chain/utils 
 
