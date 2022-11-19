@@ -1,15 +1,15 @@
 #pragma once
 #ifndef BPLUSTREE_H
 #define BPLUSTREE_H
+
 #include "nodes.h"
 #include "DoubleList.h"
-
 template <typename T>
 class BPlusTree
 {
 private:
     nbpt::node<T>* root;
-    size_t maxchildren{};
+    size_t maxchildren;
     std::function<bool(const T&, const T&)> less;
     std::function<bool(const T&, const T&)> greater;
     std::function<bool(const T&, const T&)> equal;

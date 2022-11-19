@@ -109,7 +109,10 @@
 		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/DoubleList.h">
 			<Option target="block_chain"/>
 		</Unit>
-		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/HashMap.h">
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/Hash.h">
+			<Option target="block_chain"/>
+		</Unit>
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/Heap.h">
 			<Option target="block_chain"/>
 		</Unit>
 		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/class/nodes.h">

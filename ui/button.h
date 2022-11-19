@@ -19,13 +19,13 @@ private:
     float height;
 
 public:
-    explicit Button(sf::Color color, float x, float y, float h, float w, const std::string& text, const float& textSize, sf::Color textColor = sf::Color::Yellow)
+    explicit Button(sf::Color color, float x, float y, float h, float w, const std::string& text, const float& textSize, sf::Color textColor = sf::Color::Yellow, const std::string& path = "./assets/fonts/Raleway-Bold.ttf")
     : width(w), height(h), position(x, y) {
         rectangle = new sf::RectangleShape;
         rectangle->setFillColor(color);
         rectangle->setPosition(x, y);
         rectangle->setSize(sf::Vector2(w, h));
-        word = new Word(text, x, y, textSize, textColor);
+        word = new Word(text, x, y, textSize, textColor, path);
 
         const sf::FloatRect bounds(word->texto.getLocalBounds());
         const auto box(rectangle->getSize());

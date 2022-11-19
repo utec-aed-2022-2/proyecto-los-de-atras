@@ -1,6 +1,9 @@
 #pragma once
 #ifndef BLOCK_H
 #define BLOCK_H
+
+#include <utility>
+
 #include "transaction.h"
 #include "../function/hashFunctions.h"
 #include "../class/BPlusTree.h"
@@ -11,66 +14,56 @@
 const std::string hashGenesis = "0000000000000000000000000000000000000000000000000000000000000000";
 const uint64_t nonceDefaul = -1;
 
-struct block
-{
+struct block {
     std::uint64_t id{};
     std::uint64_t nonce{};
-    DoubleList<transaction*> data;
-    Hash<std::string, transaction*> dataHash;
-    BPlusTree<transaction*> orderByDate{
-            BPlusTree<transaction*>(
-                    23,
-                    [](const transaction* first, const transaction* second){ return first->date < second->date;},
-                    [](const transaction* first, const transaction* second){ return second->date < first->date;},
-                    [](const transaction* first, const transaction* second){ return second->date == first->date;}
-            )
+    DoubleList<transaction *> data;
+    Hash<std::string, transaction *> dataHash;
+
+    BPlusTree<transaction *> orderByDate{
+            23,
+            [](const transaction *first, const transaction *second) { return first->date < second->date; },
+            [](const transaction *first, const transaction *second) { return second->date < first->date; },
+            [](const transaction *first, const transaction *second) { return second->date == first->date; }
     };
-    BPlusTree<transaction*> orderByAmount{
-            BPlusTree<transaction*>(
-                    23,
-                    [](const transaction* first, const transaction* second){ return first->amount < second->amount;},
-                    [](const transaction* first, const transaction* second){ return second->amount < first->amount;},
-                    [](const transaction* first, const transaction* second){ return second->amount == first->amount;}
-            )
+    BPlusTree<transaction *> orderByAmount{
+            23,
+            [](const transaction *first, const transaction *second) { return first->amount < second->amount; },
+            [](const transaction *first, const transaction *second) { return second->amount < first->amount; },
+            [](const transaction *first, const transaction *second) { return second->amount == first->amount; }
     };
-    Heap<transaction*> maxTxDate{
-            Heap<transaction*>(
-                    23,
-                    [](const transaction* first, const transaction* second){ return first->date < second->date;},
-                    [](const transaction* first, const transaction* second){ return second->date < first->date;},
-                    [](const transaction* first, const transaction* second){ return first->amount == second->amount;}
-            )
+    Heap<transaction *> maxTxDate{
+            23,
+            [](const transaction *first, const transaction *second) { return first->date < second->date; },
+            [](const transaction *first, const transaction *second) { return second->date < first->date; },
+            [](const transaction *first, const transaction *second) { return first->date == second->date; }
+
     };
-    Heap<transaction*, true> minTxDate{
-            Heap<transaction*, true>(
-                    23,
-                    [](const transaction* first, const transaction* second){ return first->date < second->date;},
-                    [](const transaction* first, const transaction* second){ return second->date < first->date;},
-                    [](const transaction* first, const transaction* second){ return first->amount == second->amount;}
-            )
+    Heap<transaction *, true> minTxDate{
+            23,
+            [](const transaction *first, const transaction *second) { return first->date < second->date; },
+            [](const transaction *first, const transaction *second) { return second->date < first->date; },
+            [](const transaction *first, const transaction *second) { return first->date == second->date; }
     };
-    Heap<transaction*> maxTxAmount{
-            Heap<transaction*>(
-                    23,
-                    [](const transaction* first, const transaction* second){ return first->amount < second->amount;},
-                    [](const transaction* first, const transaction* second){ return second->amount < first->amount;},
-                    [](const transaction* first, const transaction* second){ return first->amount == second->amount;}
-            )
+    Heap<transaction *> maxTxAmount{
+            23,
+            [](const transaction *first, const transaction *second) { return first->amount < second->amount; },
+            [](const transaction *first, const transaction *second) { return second->amount < first->amount; },
+            [](const transaction *first, const transaction *second) { return first->amount == second->amount; }
+
     };
-    Heap<transaction*, true> minTxAmount{
-            Heap<transaction*, true>(
-                    23,
-                    [](const transaction* first, const transaction* second){ return first->amount < second->amount;},
-                    [](const transaction* first, const transaction* second){ return second->amount < first->amount;},
-                    [](const transaction* first, const transaction* second){ return first->amount == second->amount;}
-            )
+    Heap<transaction *, true> minTxAmount{
+            23,
+            [](const transaction *first, const transaction *second) { return first->amount < second->amount; },
+            [](const transaction *first, const transaction *second) { return second->amount < first->amount; },
+            [](const transaction *first, const transaction *second) { return first->amount == second->amount; }
     };
     std::string prevHash;
     std::string hash;
 
     block() = default;
     ~block() = default;
-    block(uint64_t id, std::string prevHash = hashGenesis);
+    explicit block(uint64_t id, std::string prevHash = hashGenesis);
     block(const block &other);
     block& operator=(const block &other);
 
@@ -92,17 +85,15 @@ struct block
     DoubleList<transaction*> minTxA();
 };
 
-block::block(uint64_t id, std::string prevHash)
-{
+block::block(uint64_t id, std::string prevHash) {
     this->id = id;
     this->nonce = nonceDefaul;
-    this->prevHash = prevHash;
+    this->prevHash = std::move(prevHash);
     this->hash = calculateHash();
     this->mine();
 }
 
-block::block(const block &other)
-{
+block::block(const block &other) {
     this->id = other.id;
     this->nonce = other.nonce;
     this->data = other.data;
@@ -117,9 +108,8 @@ block::block(const block &other)
     this->hash = other.hash;
 }
 
-block& block::operator=(const block &other)
-{
-    if(&other== this) { return *this; }
+block &block::operator=(const block &other) {
+    if (&other == this) { return *this; }
     this->id = other.id;
     this->nonce = other.nonce;
     this->data = other.data;
@@ -147,12 +137,16 @@ void block::insert(transaction* tx)
     maxTxAmount.push(data.end()->data);
     minTxAmount.push(data.end()->data);
     this->hash = this->calculateHash();
-    // std::cout << tx << std::endl;
-    // std::cout << data.BACK() << std::endl;
-    // std::cout << dataHash.get(ss.str()) << std::endl;
-    // std::cout << maxTxDate.top() << std::endl;
-    // std::cout << minTxAmount.top() << std::endl;
+    /*
+    std::cout << tx << std::endl;
+    std::cout << data.BACK() << std::endl;
+    std::cout << dataHash.get(ss.str()) << std::endl;
+    std::cout << maxTxDate.top() << std::endl;
+    std::cout << minTxAmount.top() << std::endl;
+    */
 }
+
+/*remove section*/
 
 bool block::search(transaction* tx)
 {

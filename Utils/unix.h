@@ -6,6 +6,36 @@
 #include <string>
 #include <sstream>
 
+std::string dateToUnixTimestamp(const std::string& strDate) // date = "dd/mm/yyyy hh/mm/ss" estrictamente
+{
+    int day = std::stoi(strDate.substr(0, 2));
+    int month = std::stoi(strDate.substr(3, 2));
+    int year = std::stoi(strDate.substr(6, 4));
+    int hour = std::stoi(strDate.substr(11, 2));
+    int min = std::stoi(strDate.substr(14, 2));
+    int sec = std::stoi(strDate.substr(17, 2));
+
+    std::cout << year << " " << month << " " << day << " " << hour << " " << min << " " << sec << " unixTimesTamp: ";
+
+	time_t rawtime;
+	struct tm * timeinfo;
+	/* get current timeinfo: */
+	time ( &rawtime ); //or: rawtime = time(0);
+	/* convert to struct: */
+	timeinfo = localtime ( &rawtime );
+	/* now modify the timeinfo to the given date: */
+	timeinfo->tm_year   = year - 1900;
+	timeinfo->tm_mon    = month - 1;    //months since January - [0,11]
+	timeinfo->tm_mday   = day;          //day of the month - [1,31]
+	timeinfo->tm_hour   = hour;         //hours since midnight - [0,23]
+	timeinfo->tm_min    = min;          //minutes after the hour - [0,59]
+	timeinfo->tm_sec    = sec;          //seconds after the minute - [0,59]
+	/* call mktime: create unix time stamp from timeinfo struct */
+	auto date = timegm( timeinfo );
+    std::cout << std::to_string(date) << std::endl;
+	return std::to_string(date);
+}
+
 std::string unixTimeToHumanReadable(const long int& seconds)
 {
     std::string ans = "";

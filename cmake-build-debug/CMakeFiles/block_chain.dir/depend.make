@@ -6,7 +6,7 @@ CMakeFiles/block_chain.dir/main.cpp.o: ../Base/block.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../Base/transaction.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../class/BPlusTree.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../class/DoubleList.h
-CMakeFiles/block_chain.dir/main.cpp.o: ../class/HashMap.h
+CMakeFiles/block_chain.dir/main.cpp.o: ../class/Hash.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../class/Heap.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../class/nodes.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../function/hashFunctions.h
@@ -17,5 +17,4 @@ CMakeFiles/block_chain.dir/main.cpp.o: ../utility/stoli.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../utility/swap.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../utility/unix.h
 CMakeFiles/block_chain.dir/main.cpp.o: ../main.cpp
-CMakeFiles/block_chain.dir/main.cpp.o: ../test/test.h
 

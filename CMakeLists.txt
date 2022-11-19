@@ -12,7 +12,8 @@ include_directories(test)
 add_executable(block_chain
         class/BPlusTree.h
         class/DoubleList.h
-        class/HashMap.h
+        class/Hash.h
+        class/Heap.h
         class/nodes.h
         function/hashFunctions.h
         Base/block.h
