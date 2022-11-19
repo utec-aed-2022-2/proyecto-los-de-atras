@@ -11,8 +11,8 @@ class Hash
 {
 private:
     DoubleList<nh::node<TK, TV>>* array;
-    size_t capacity;
-    size_t size;
+    size_t capacity{};
+    size_t size{};
 
 public:
     Hash();

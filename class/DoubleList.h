@@ -33,7 +33,7 @@ class DoubleList : public list<T>
 private:
     nl::node<T>* front;
     nl::node<T>* back;
-    size_t size;
+    size_t size{};
 
 public:
     DoubleList();

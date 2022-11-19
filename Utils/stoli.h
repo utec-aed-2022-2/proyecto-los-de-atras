@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
-#include <math.h>
+#include <cmath>
 
 long int stoli(const std::string &__str)
 {

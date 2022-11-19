@@ -1,7 +1,7 @@
 #pragma once
 #ifndef HEAP_H
 #define HEAP_H
-#include "../utility/swap.h"
+#include "../Utils/swap.h"
 #include "DoubleList.h"
 
 template<typename T, bool activate = false>
@@ -9,8 +9,8 @@ class Heap
 {
 private:
     T* A;
-    size_t capacity;
-    size_t size;
+    size_t capacity{};
+    size_t size{};
     std::function<bool(const T&, const T&)> less;
     std::function<bool(const T&, const T&)> greater;
     std::function<bool(const T&, const T&)> equal;
@@ -20,14 +20,6 @@ public:
     ~Heap();
     explicit Heap(size_t capacity);
     Heap(size_t capacity, std::function<bool(const T&, const T&)> less, std::function<bool(const T&, const T&)> greater, std::function<bool(const T&, const T&)> equal);
-
-    void print()
-    {
-        for (int i = 0; i < size; i++)
-        {
-            std::cout << A[i] << " ";
-        }
-    }
 
     void push(T key);
     void pop();
@@ -39,6 +31,7 @@ private:
     [[nodiscard]] int PARENT(int index) const;
     [[nodiscard]] int LEFT(int index) const;
     [[nodiscard]] int RIGHT(int index) const;
+    void topRangeR(int index, DoubleList<T>& dl);
     void heapifyDown(int index);
     void heapifyUp(int index);
 };
@@ -142,7 +135,7 @@ template<typename T, bool activate>
 DoubleList<T> Heap<T, activate>::topRange()
 {
     DoubleList<T> dl;
-    for (int i = 0; i < size; i++) { if (equal(A[0], A[i])) { dl.push_back(A[i]); } }
+    topRangeR(0, dl);
     return dl;
 }
 
@@ -157,6 +150,17 @@ int Heap<T, activate>::LEFT(int index) const { return (2*index + 1); }
 
 template<typename T, bool activate>
 int Heap<T, activate>::RIGHT(int index) const { return (2*index + 2); }
+
+template<typename T, bool activate>
+void Heap<T, activate>::topRangeR(int index, DoubleList<T>& dl)
+{
+    if (equal(A[0], A[index]))
+    {
+        dl.push_back(A[index]);
+        topRangeR(LEFT(index), dl);
+        topRangeR(RIGHT(index), dl);
+    }
+}
 
 template<typename T, bool activate>
 void Heap<T, activate>::heapifyDown(int index)

@@ -1,7 +1,7 @@
 #pragma once
 #ifndef BLOCKCHAIN_H
 #define BLOCKCHAIN_H
-#include "base/block.h"
+#include "block.h"
 
 class Blockchain
 {
@@ -9,26 +9,25 @@ private:
     DoubleList<block*> chain;
     Hash<std::string, nl::node<block*>*> usersHash;
     BPlusTree<transaction*> allOrderByDate{
-        BPlusTree<transaction*>(
-            23,
-            [](const transaction* first, const transaction* second){ return first->date < second->date;},
-            [](const transaction* first, const transaction* second){ return second->date < first->date;},
-            [](const transaction* first, const transaction* second){ return second->date == first->date;}
-        )
+            BPlusTree<transaction*>(
+                    23,
+                    [](const transaction* first, const transaction* second){ return first->date < second->date;},
+                    [](const transaction* first, const transaction* second){ return second->date < first->date;},
+                    [](const transaction* first, const transaction* second){ return second->date == first->date;}
+            )
     };
     BPlusTree<transaction*> allOrderByAmount{
-        BPlusTree<transaction*>(
-            23, 
-            [](const transaction* first, const transaction* second){ return first->amount < second->amount;},
-            [](const transaction* first, const transaction* second){ return second->amount < first->amount;},
-            [](const transaction* first, const transaction* second){ return second->amount == first->amount;}
-        )
+            BPlusTree<transaction*>(
+                    23,
+                    [](const transaction* first, const transaction* second){ return first->amount < second->amount;},
+                    [](const transaction* first, const transaction* second){ return second->amount < first->amount;},
+                    [](const transaction* first, const transaction* second){ return second->amount == first->amount;}
+            )
     };
 
 public:
     Blockchain() = default;
     ~Blockchain() = default;
-    Blockchain(const std::string& usersPath, const std::string& transactionsPath);
 
     void createUser(const std::string& username, const std::string& password);
     block* myBlock(const std::string& username, const std::string& password);
@@ -120,7 +119,7 @@ DoubleList<transaction*> Blockchain::myMinTxA(const std::string& username, const
 }
 
 void Blockchain::setTx(const std::string& username, const std::string& password, const std::string& to, float amount)
-{   
+{
     std::stringstream ss; ss << username; ss << password;
     const auto p1 = std::chrono::system_clock::now();
     std::stringstream date; date<<std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
@@ -142,7 +141,7 @@ void Blockchain::setTx(const std::string& username, const std::string& password,
 }
 
 void Blockchain::setTx(const std::string& username, const std::string& password, const std::string& to, float amount, const std::string& date)
-{   
+{
     std::stringstream ss; ss << username; ss << password;
     transaction* tx = new transaction(username, to, amount, date);
     usersHash.get(ss.str())->data->insert(tx);
