@@ -109,6 +109,10 @@ Blockchain.h
 ../ui/Blockchain.h
 utils/unix.h
 ../ui/utils/unix.h
+Hash.h
+../ui/Hash.h
+DoubleList.h
+../ui/DoubleList.h
 
 ../ui/input.h
 button.h

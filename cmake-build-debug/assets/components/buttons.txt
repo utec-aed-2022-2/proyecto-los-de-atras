@@ -1,4 +1,0 @@
-x, y, largo, alto, texto, text_size
-540 270 200 50 Register 30
-540 335 200 50 Login 30
-540 400 200 50 Close 30

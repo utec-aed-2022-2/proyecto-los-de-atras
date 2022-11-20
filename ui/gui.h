@@ -17,6 +17,8 @@
 #include "password.h"
 #include "Blockchain.h"
 #include "utils/unix.h"
+#include "Hash.h"
+#include "DoubleList.h"
 
 enum class options {
     register_,
@@ -27,19 +29,13 @@ enum class options {
     newTransaction
 };
 
-std::map<std::string, options> map{
-        {"Login",    options::login},
-        {"Close",    options::close},
-        {"Register", options::register_}
-};
-
-
 class Gui {
 private:
     sf::RenderWindow *window{};
     Blockchain *blockchain{};
     std::string sessionUsername{};
     std::string sessionPassword{};
+    Hash<std::string, sf::Color> colors;
 
 public:
     explicit Gui() = default;
@@ -55,6 +51,15 @@ public:
                 sf::VideoMode((int) (desktop.width * 2.0 / 3.0), (int) (desktop.height * 2.0 / 3.0)), "BlockChain");
         window->setPosition(sf::Vector2<int>((int) (desktop.width / 2.0 - window->getSize().x / 2.0),
                                              (int) (desktop.height / 2.0 - window->getSize().y / 2.0)));
+
+        colors.set("red", sf::Color::Red);
+        colors.set("black", sf::Color::Black);
+        colors.set("blue", sf::Color::Blue);
+        colors.set("yellow", sf::Color::Yellow);
+        colors.set("white", sf::Color::White);
+        colors.set("cyan", sf::Color::Cyan);
+        colors.set("green", sf::Color::Green);
+
         return (window->isOpen() && blockchain);
     }
 
@@ -131,15 +136,15 @@ public:
                         }
                         break;
                     case sf::Event::MouseMoved:
-                        if (Send.isOnBound(actual_x, actual_y)) {
-                            Send.mouseEnterEvent(sf::Color::Yellow, sf::Color::Blue);
-                        } else if (Send.isOnBound(prior_x, prior_y)) {
-                            Send.mouseLeaveEvent(sf::Color::Blue, sf::Color::Yellow);
+                        if (Send.isOnBound(actual_x, actual_y) && !Send.isOnBound(prior_x, prior_y)) {
+                            Send.mouseEnterEvent();
+                        } else if (Send.isOnBound(prior_x, prior_y) && !Send.isOnBound(actual_x, actual_y)) {
+                            Send.mouseLeaveEvent();
                         }
-                        if (Cancel.isOnBound(actual_x, actual_y)) {
-                            Cancel.mouseEnterEvent(sf::Color::Black, sf::Color::Red);
-                        } else if (Cancel.isOnBound(prior_x, prior_y)) {
-                            Cancel.mouseLeaveEvent(sf::Color::Red, sf::Color::Black);
+                        if (Cancel.isOnBound(actual_x, actual_y) && !Cancel.isOnBound(prior_x, prior_y)) {
+                            Cancel.mouseEnterEvent();
+                        } else if (Cancel.isOnBound(prior_x, prior_y) && !Cancel.isOnBound(actual_x, actual_y)) {
+                            Cancel.mouseLeaveEvent();
                         }
                         prior_x = actual_x;
                         prior_y = actual_y;
@@ -272,45 +277,45 @@ public:
                                 break;
                         }
                     case sf::Event::MouseMoved:
-                        if (LogOut.isOnBound(actual_x, actual_y)) {
-                            LogOut.mouseEnterEvent(sf::Color::Black, sf::Color::Red);
-                        } else if (LogOut.isOnBound(prior_x, prior_y)) {
-                            LogOut.mouseLeaveEvent(sf::Color::Red, sf::Color::Black);
+                        if (LogOut.isOnBound(actual_x, actual_y) && !LogOut.isOnBound(prior_x, prior_y)) {
+                            LogOut.mouseEnterEvent();
+                        } else if (LogOut.isOnBound(prior_x, prior_y) && !LogOut.isOnBound(actual_x, actual_y)) {
+                            LogOut.mouseLeaveEvent();
                         }
-                        if (newTransaction.isOnBound(actual_x, actual_y)) {
-                            newTransaction.mouseEnterEvent(sf::Color::Yellow, sf::Color::Blue);
-                        } else if (newTransaction.isOnBound(prior_x, prior_y)) {
-                            newTransaction.mouseLeaveEvent(sf::Color::Blue, sf::Color::Yellow);
+                        if (newTransaction.isOnBound(actual_x, actual_y) && !newTransaction.isOnBound(prior_x, prior_y)) {
+                            newTransaction.mouseEnterEvent();
+                        } else if (newTransaction.isOnBound(prior_x, prior_y) && !newTransaction.isOnBound(actual_x, actual_y)) {
+                            newTransaction.mouseLeaveEvent();
                         }
-                        if (amountRange.isOnBound(actual_x, actual_y)) {
-                            amountRange.mouseEnterEvent(sf::Color::Black, sf::Color::Green);
-                        } else if (amountRange.isOnBound(prior_x, prior_y)) {
-                            amountRange.mouseLeaveEvent(sf::Color::Green, sf::Color::Black);
+                        if (amountRange.isOnBound(actual_x, actual_y) && !amountRange.isOnBound(prior_x, prior_y)) {
+                            amountRange.mouseEnterEvent();
+                        } else if (amountRange.isOnBound(prior_x, prior_y) && !amountRange.isOnBound(actual_x, actual_y)) {
+                            amountRange.mouseLeaveEvent();
                         }
-                        if (dateRange.isOnBound(actual_x, actual_y)) {
-                            dateRange.mouseEnterEvent(sf::Color::Black, sf::Color::Green);
-                        } else if (dateRange.isOnBound(prior_x, prior_y)) {
-                            dateRange.mouseLeaveEvent(sf::Color::Green, sf::Color::Black);
+                        if (dateRange.isOnBound(actual_x, actual_y) && !dateRange.isOnBound(prior_x, prior_y)) {
+                            dateRange.mouseEnterEvent();
+                        } else if (dateRange.isOnBound(prior_x, prior_y) && !dateRange.isOnBound(actual_x, actual_y)) {
+                            dateRange.mouseLeaveEvent();
                         }
-                        if (topMinAmount.isOnBound(actual_x, actual_y)) {
-                            topMinAmount.mouseEnterEvent(sf::Color::Black, sf::Color::Green);
-                        } else if (topMinAmount.isOnBound(prior_x, prior_y)) {
-                            topMinAmount.mouseLeaveEvent(sf::Color::Green, sf::Color::Black);
+                        if (topMinAmount.isOnBound(actual_x, actual_y) && !topMinAmount.isOnBound(prior_x, prior_y)) {
+                            topMinAmount.mouseEnterEvent();
+                        } else if (topMinAmount.isOnBound(prior_x, prior_y) && !topMinAmount.isOnBound(actual_x, actual_y)) {
+                            topMinAmount.mouseLeaveEvent();
                         }
-                        if (topMaxAmount.isOnBound(actual_x, actual_y)) {
-                            topMaxAmount.mouseEnterEvent(sf::Color::Black, sf::Color::Green);
-                        } else if (topMaxAmount.isOnBound(prior_x, prior_y)) {
-                            topMaxAmount.mouseLeaveEvent(sf::Color::Green, sf::Color::Black);
+                        if (topMaxAmount.isOnBound(actual_x, actual_y) && !topMaxAmount.isOnBound(prior_x, prior_y)) {
+                            topMaxAmount.mouseEnterEvent();
+                        } else if (topMaxAmount.isOnBound(prior_x, prior_y) && !topMaxAmount.isOnBound(actual_x, actual_y)) {
+                            topMaxAmount.mouseLeaveEvent();
                         }
-                        if (topMinDate.isOnBound(actual_x, actual_y)) {
-                            topMinDate.mouseEnterEvent(sf::Color::Black, sf::Color::Green);
-                        } else if (topMinDate.isOnBound(prior_x, prior_y)) {
-                            topMinDate.mouseLeaveEvent(sf::Color::Green, sf::Color::Black);
+                        if (topMinDate.isOnBound(actual_x, actual_y) && !topMinDate.isOnBound(prior_x, prior_y)) {
+                            topMinDate.mouseEnterEvent();
+                        } else if (topMinDate.isOnBound(prior_x, prior_y) && !topMinDate.isOnBound(actual_x, actual_y)) {
+                            topMinDate.mouseLeaveEvent();
                         }
-                        if (topMaxDate.isOnBound(actual_x, actual_y)) {
-                            topMaxDate.mouseEnterEvent(sf::Color::Black, sf::Color::Green);
-                        } else if (topMaxDate.isOnBound(prior_x, prior_y)) {
-                            topMaxDate.mouseLeaveEvent(sf::Color::Green, sf::Color::Black);
+                        if (topMaxDate.isOnBound(actual_x, actual_y) && !topMaxDate.isOnBound(prior_x, prior_y)) {
+                            topMaxDate.mouseEnterEvent();
+                        } else if (topMaxDate.isOnBound(prior_x, prior_y) && !topMaxDate.isOnBound(actual_x, actual_y)) {
+                            topMaxDate.mouseLeaveEvent();
                         }
                         prior_x = actual_x;
                         prior_y = actual_y;
@@ -352,7 +357,8 @@ public:
             }
 
             window->clear();
-            window->draw(row.texto);
+            myTransactions.draw(window);
+            row.draw(window);
             LogOut.draw(window);
             newTransaction.draw(window);
             amountRange.draw(window);
@@ -365,7 +371,6 @@ public:
             topMinAmount.draw(window);
             topMaxDate.draw(window);
             topMinDate.draw(window);
-            window->draw(myTransactions.texto);
 
             float x = 50;
             float y = 200;
@@ -440,15 +445,15 @@ public:
                         }
                         break;
                     case sf::Event::MouseMoved:
-                        if (Login.isOnBound(actual_x, actual_y)) {
-                            Login.mouseEnterEvent(sf::Color::Yellow);
-                        } else if (Login.isOnBound(prior_x, prior_y)) {
-                            Login.mouseLeaveEvent(sf::Color::Blue);
+                        if (Login.isOnBound(actual_x, actual_y) && !Login.isOnBound(prior_x, prior_y)) {
+                            Login.mouseEnterEvent();
+                        } else if (Login.isOnBound(prior_x, prior_y) && !Login.isOnBound(actual_x, actual_y)) {
+                            Login.mouseLeaveEvent();
                         }
-                        if (Back.isOnBound(actual_x, actual_y)) {
-                            Back.mouseEnterEvent(sf::Color::Black, sf::Color::Red);
-                        } else if (Back.isOnBound(prior_x, prior_y)) {
-                            Back.mouseLeaveEvent(sf::Color::Red, sf::Color::Black);
+                        if (Back.isOnBound(actual_x, actual_y) && !Back.isOnBound(prior_x, prior_y)) {
+                            Back.mouseEnterEvent();
+                        } else if (Back.isOnBound(prior_x, prior_y) && !Back.isOnBound(actual_x, actual_y)) {
+                            Back.mouseLeaveEvent();
                         }
                         if (Password.isOnBound(actual_x, actual_y)) {
                             Password.showPassword();
@@ -477,8 +482,8 @@ public:
             Login.draw(window);
             Username.draw(window);
             Password.draw(window);
-            window->draw(messagePassword.texto);
-            window->draw(messageUsername.texto);
+            messagePassword.draw(window);
+            messageUsername.draw(window);
             window->display();
         }
 
@@ -531,16 +536,16 @@ public:
                         }
                         break;
                     case sf::Event::MouseMoved:
-                        if (Register.isOnBound(actual_x, actual_y)) {
-                            Register.mouseEnterEvent(sf::Color::Yellow);
-                        } else if (Register.isOnBound(prior_x, prior_y)) {
-                            Register.mouseLeaveEvent(sf::Color::Blue);
+                        if (Register.isOnBound(actual_x, actual_y) && !Register.isOnBound(prior_x, prior_y)) {
+                            Register.mouseEnterEvent();
+                        } else if (Register.isOnBound(prior_x, prior_y) && !Register.isOnBound(actual_x, actual_y)) {
+                            Register.mouseLeaveEvent();
                         }
 
-                        if (Back.isOnBound(actual_x, actual_y)) {
-                            Back.mouseEnterEvent(sf::Color::Black, sf::Color::Red);
-                        } else if (Back.isOnBound(prior_x, prior_y)) {
-                            Back.mouseLeaveEvent(sf::Color::Red, sf::Color::Black);
+                        if (Back.isOnBound(actual_x, actual_y) && !Back.isOnBound(prior_x, prior_y)) {
+                            Back.mouseEnterEvent();
+                        } else if (Back.isOnBound(prior_x, prior_y) && !Back.isOnBound(actual_x, actual_y)) {
+                            Back.mouseLeaveEvent();
                         }
                         if (Password.isOnBound(actual_x, actual_y)) {
                             Password.showPassword();
@@ -572,8 +577,8 @@ public:
             Username.draw(window);
             Password.draw(window);
             Back.draw(window);
-            window->draw(messagePassword.texto);
-            window->draw(messageUsername.texto);
+            messagePassword.draw(window);
+            messageUsername.draw(window);
             window->display();
         }
 
@@ -596,15 +601,20 @@ public:
 
     options showMenu() {
         sf::Vector2 size = window->getSize();
-        std::vector<Button *> buttons;
-        buttons.reserve(5);
-        float largo, alto, x, y, textSize;
-        std::string text;
+        DoubleList<Button*> buttons;
 
-        std::ifstream file("./assets/components/buttons.txt");
+        Hash<std::string, options> hashOptions;
+        hashOptions.set("Login", options::login);
+        hashOptions.set("Close", options::close);
+        hashOptions.set("Register", options::register_);
+
+        float largo, alto, x, y, textSize;
+        std::string text, color, textColor;
+
+        std::ifstream file("./assets/components/menu/buttons.txt");
         std::getline(file, text);
-        while (file >> x >> y >> largo >> alto >> text >> textSize) {
-            buttons.push_back(new Button(sf::Color::Blue, x, y, alto, largo, text, textSize));
+        while (file >> x >> y >> largo >> alto >> color >> text >> textSize >> textColor) {
+            buttons.push_back(new Button(colors.get(color), x, y, alto, largo, text, textSize, colors.get(textColor)));
         }
 
         int actual_x, actual_y, prior_x, prior_y;
@@ -620,31 +630,40 @@ public:
                 switch (event.type) {
                     case sf::Event::Closed:
                         return options::close;
-                    case sf::Event::MouseMoved:
-                        for (Button *&button: buttons) {
-                            if (button->isOnBound(actual_x, actual_y)) {
-                                button->mouseEnterEvent(sf::Color::Yellow);
-                            } else if (button->isOnBound(prior_x, prior_y)) {
-                                button->mouseLeaveEvent(sf::Color::Blue);
+                    case sf::Event::MouseMoved: {
+                        nl::node<Button *> *button = buttons.begin();
+                        for (int i=0; i<buttons.SIZE(); ++i) {
+                            if (button->data->isOnBound(actual_x, actual_y) && !button->data->isOnBound(prior_x, prior_y)) {
+                                button->data->mouseEnterEvent();
+                            } else if (button->data->isOnBound(prior_x, prior_y) && !button->data->isOnBound(actual_x, actual_y)) {
+                                button->data->mouseLeaveEvent();
                             }
+                            button = button->next;
                         }
                         prior_x = actual_x;
                         prior_y = actual_y;
                         break;
-                    case sf::Event::MouseButtonPressed:
-                        for (Button *&button: buttons) {
-                            if (button->isOnBound(actual_x, actual_y)) {
-                                return map[button->getWord()->mensaje];
+                    }
+                    case sf::Event::MouseButtonPressed: {
+                        nl::node<Button *> *button = buttons.begin();
+                        for (int i=0; i<buttons.SIZE(); ++i) {
+                            if (button->data->isOnBound(actual_x, actual_y)){
+                                return hashOptions.get(button->data->getWord()->mensaje);
                             }
+                            button = button->next;
                         }
+                    }
+
                     default:
                         break;
                 }
             }
 
             window->clear();
-            for (Button *&button: buttons) {
-                button->draw(window);
+            nl::node<Button *> *button = buttons.begin();
+            for (int i=0; i<buttons.SIZE(); ++i) {
+                button->data->draw(window);
+                button = button->next;
             }
             window->display();
         }

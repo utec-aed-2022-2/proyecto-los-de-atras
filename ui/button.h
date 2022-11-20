@@ -31,7 +31,7 @@ public:
 
     void draw(sf::RenderWindow* &window) {
         window->draw(*rectangle);
-        window->draw(word->getFont());
+        word->draw(window);
     }
 
     [[nodiscard]] bool isOnBound(int x, int y) const {
@@ -44,14 +44,16 @@ public:
         word->texto.setOrigin((bounds.width - box.x) / 2 + bounds.left, (bounds.height - box.y) / 2 + bounds.top);
     }
 
-    void mouseEnterEvent(sf::Color newColor, sf::Color newTextColor = sf::Color::Blue) {
-        rectangle->setFillColor(newColor);
-        word->texto.setFillColor(newTextColor);
+    void mouseEnterEvent() {
+        sf::Color temp = rectangle->getFillColor();
+        rectangle->setFillColor(word->texto.getFillColor());
+        word->texto.setFillColor(temp);
     }
 
-    void mouseLeaveEvent(sf::Color newColor, sf::Color newTextColor = sf::Color::Yellow) {
-        rectangle->setFillColor(newColor);
-        word->texto.setFillColor(newTextColor);
+    void mouseLeaveEvent() {
+        sf::Color temp = rectangle->getFillColor();
+        rectangle->setFillColor(word->texto.getFillColor());
+        word->texto.setFillColor(temp);
     }
 
     Word* &getWord() {

@@ -18,3 +18,5 @@ nicolas yaacaboelciclo juan 223 1668815885
 nicolas yaacaboelciclo luis 10000 1668817671
 nicolas yaacaboelciclo fernando 6400 1668817968
 aaron soyunaautomata juan 1000 1668866318
+heider ADAesFacil juan 20 1668954706
+heider ADAesFacil aaron 1000 1668954788

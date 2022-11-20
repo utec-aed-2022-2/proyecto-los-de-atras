@@ -44,6 +44,10 @@ struct Word {
         return texto;
     }
 
+    void draw(sf::RenderWindow* & window) const {
+        window->draw(texto);
+    }
+
     void setFillColor(sf::Color nuevo) {
         texto.setFillColor(nuevo);
     }
