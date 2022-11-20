@@ -13,6 +13,8 @@
 #include <map>
 
 #include "button.h"
+#include "input.h"
+#include "password.h"
 #include "Blockchain.h"
 #include "utils/unix.h"
 
@@ -86,8 +88,8 @@ public:
         Word messageUsername("Username to transfer:", 495, 180, 30, sf::Color::Yellow);
         Word messageAmount("Enter the amount:", 520, 330, 30, sf::Color::Yellow);
 
-        Button Username(sf::Color::White, 500, 230, 50, 300, "", 25, sf::Color::Black);
-        Button Amount(sf::Color::White, 500, 380, 50, 300, "", 25, sf::Color::Black);
+        InputField Username(sf::Color::White, 500, 230, 50, 300, "", 25, sf::Color::Black);
+        InputField Amount(sf::Color::White, 500, 380, 50, 300, "", 25, sf::Color::Black);
         Button Send(sf::Color::Blue, 570, 470, 60, 160, "Transfer", 30, sf::Color::Yellow);
         Button Cancel(sf::Color::Red, 1120, 50, 50, 120, "Cancel", 25, sf::Color::Black);
 
@@ -201,13 +203,13 @@ public:
 
         // Botones del amount range
         Button amountRange(sf::Color::Green, 1000, 200, 50, 240, "Amount range", 25, sf::Color::Black);
-        Button minAmount(sf::Color::White, 1000, 270, 50, 110, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
-        Button maxAmount(sf::Color::White, 1130, 270, 50, 110, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
+        InputField minAmount(sf::Color::White, 1000, 270, 50, 110, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
+        InputField maxAmount(sf::Color::White, 1130, 270, 50, 110, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
 
         // Botones del date range
         Button dateRange(sf::Color::Green, 1000, 340, 50, 240, "Date range d/m/y h:m:std", 16, sf::Color::Black);
-        Button minDate(sf::Color::White, 1000, 410, 25, 240, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
-        Button maxDate(sf::Color::White, 1000, 450, 25, 240, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
+        InputField minDate(sf::Color::White, 1000, 410, 25, 240, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
+        InputField maxDate(sf::Color::White, 1000, 450, 25, 240, "", 20, sf::Color::Black, "./assets/fonts/Anonymous_Pro.ttf");
 
         // Boton de max amount
         Button topMaxAmount(sf::Color::Green, 1000, 500, 50, 110, "Max Amount", 17, sf::Color::Black);
@@ -397,8 +399,8 @@ public:
         Word messageUsername("Username:", 560, 180, 30, sf::Color::Yellow);
         Word messagePassword("Password:", 560, 330, 30, sf::Color::Yellow);
 
-        Button Username(sf::Color::White, 500, 230, 50, 300, "", 25, sf::Color::Black);
-        Button Password(sf::Color::White, 500, 380, 50, 300, "", 25, sf::Color::Black);
+        InputField Username(sf::Color::White, 500, 230, 50, 300, "", 25, sf::Color::Black);
+        PasswordField Password(sf::Color::White, 500, 380, 50, 300, "", 25, sf::Color::Black);
         Button Login(sf::Color::Blue, 570, 470, 60, 160, "Login", 30, sf::Color::Yellow);
         Button Back(sf::Color::Red, 1120, 50, 50, 100, "Back", 25, sf::Color::Black);
 
@@ -422,7 +424,7 @@ public:
                         if (Username.isOnBound(actual_x, actual_y)) {
                             Username.updateText(Username.getWord()->mensaje + static_cast<char>(event.text.unicode));
                         } else if (Password.isOnBound(actual_x, actual_y)) {
-                            Password.updateText(Password.getWord()->mensaje + static_cast<char>(event.text.unicode));
+                            Password.updateText(static_cast<char>(event.text.unicode));
                         }
                         break;
                     case sf::Event::KeyPressed:
@@ -448,11 +450,17 @@ public:
                         } else if (Back.isOnBound(prior_x, prior_y)) {
                             Back.mouseLeaveEvent(sf::Color::Red, sf::Color::Black);
                         }
+                        if (Password.isOnBound(actual_x, actual_y)) {
+                            Password.showPassword();
+                        } else if (Password.isOnBound(prior_x, prior_y)) {
+                            Password.hidePassword();
+                        }
                         prior_x = actual_x;
                         prior_y = actual_y;
                         break;
                     case sf::Event::MouseButtonPressed:
                         if (Login.isOnBound(actual_x, actual_y)) {
+                            Password.showPassword();
                             this->sessionUsername = Username.getWord()->mensaje;
                             this->sessionPassword = Password.getWord()->mensaje;
                             return options::showTransactions;
@@ -481,8 +489,8 @@ public:
         Word messageUsername("Register Username:", 500, 180, 30, sf::Color::Yellow);
         Word messagePassword("Register Password:", 500, 330, 30, sf::Color::Yellow);
 
-        Button Username(sf::Color::White, 500, 230, 50, 300, "", 25, sf::Color::Black);
-        Button Password(sf::Color::White, 500, 380, 50, 300, "", 25, sf::Color::Black);
+        InputField Username(sf::Color::White, 500, 230, 50, 300, "", 25, sf::Color::Black);
+        PasswordField Password(sf::Color::White, 500, 380, 50, 300, "", 25, sf::Color::Black);
         Button Register(sf::Color::Blue, 560, 470, 60, 170, "Register", 30, sf::Color::Yellow);
         Button Back(sf::Color::Red, 1120, 50, 50, 100, "Back", 25, sf::Color::Black);
 
@@ -507,7 +515,7 @@ public:
                         if (Username.isOnBound(actual_x, actual_y)) {
                             Username.updateText(Username.getWord()->mensaje + static_cast<char>(event.text.unicode));
                         } else if (Password.isOnBound(actual_x, actual_y)) {
-                            Password.updateText(Password.getWord()->mensaje + static_cast<char>(event.text.unicode));
+                            Password.updateText(static_cast<char>(event.text.unicode));
                         }
                         break;
                     case sf::Event::KeyPressed:
@@ -534,12 +542,18 @@ public:
                         } else if (Back.isOnBound(prior_x, prior_y)) {
                             Back.mouseLeaveEvent(sf::Color::Red, sf::Color::Black);
                         }
+                        if (Password.isOnBound(actual_x, actual_y)) {
+                            Password.showPassword();
+                        } else if (Password.isOnBound(prior_x, prior_y)) {
+                            Password.hidePassword();
+                        }
                         prior_x = actual_x;
                         prior_y = actual_y;
                         break;
 
                     case sf::Event::MouseButtonPressed:
                         if (Register.isOnBound(actual_x, actual_y)) {
+                            Password.showPassword();
                             std::string username = Username.getWord()->mensaje;
                             std::string password = Password.getWord()->mensaje;
                             loadToFile(username, password, "./assets/users/users.txt");

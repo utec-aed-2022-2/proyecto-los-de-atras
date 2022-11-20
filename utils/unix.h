@@ -5,6 +5,7 @@
 #include <cstring>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 std::string dateToUnixTimestamp(const std::string& strDate) // date = "dd/mm/yyyy hh/mm/ss" estrictamente
 {

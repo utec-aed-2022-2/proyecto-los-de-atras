@@ -132,6 +132,12 @@
 		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/ui/gui.h">
 			<Option target="block_chain"/>
 		</Unit>
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/ui/input.h">
+			<Option target="block_chain"/>
+		</Unit>
+		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/ui/password.h">
+			<Option target="block_chain"/>
+		</Unit>
 		<Unit filename="/home/juan-diego/UTEC/CS2023aed/block-chain/ui/word.h">
 			<Option target="block_chain"/>
 		</Unit>

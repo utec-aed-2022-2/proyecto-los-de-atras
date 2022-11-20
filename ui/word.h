@@ -34,8 +34,8 @@ struct Word {
         texto.setPosition(position.x, position.y);
     }
 
-    void setText(std::string newText) {
-        this->mensaje = std::string(newText);
+    void setText(const std::string& newText) {
+        this->mensaje = newText;
         size = newText.length();
         texto.setString(newText);
     }

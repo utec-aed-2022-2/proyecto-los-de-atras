@@ -24,7 +24,7 @@ add_executable(block_chain
         ui/gui.h
         ui/word.h
         main.cpp
-        )
+        ui/input.h ui/password.h)
 
 target_link_libraries(
     ${PROJECT_NAME}  sfml-system sfml-window sfml-graphics sfml-audio

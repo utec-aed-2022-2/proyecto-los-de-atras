@@ -11,7 +11,7 @@
 #include <utility>
 
 struct Button {
-private:
+protected:
     sf::RectangleShape* rectangle;
     Position position;
     Word* word;
@@ -26,10 +26,7 @@ public:
         rectangle->setPosition(x, y);
         rectangle->setSize(sf::Vector2(w, h));
         word = new Word(text, x, y, textSize, textColor, path);
-
-        const sf::FloatRect bounds(word->texto.getLocalBounds());
-        const auto box(rectangle->getSize());
-        word->texto.setOrigin((bounds.width - box.x) / 2 + bounds.left, (bounds.height - box.y) / 2 + bounds.top);
+        this->centerWord();
     }
 
     void draw(sf::RenderWindow* &window) {
@@ -41,24 +38,10 @@ public:
         return (static_cast<float>(x) > position.x && static_cast<float>(x) < position.x + width) && (static_cast<float>(y) > position.y && static_cast<float>(y) < position.y + height);
     }
 
-    void updateText(std::string newText) {
-        this->word->setText(std::move(newText));
-        centerWord();
-    }
-
     void centerWord() {
         const sf::FloatRect bounds(word->texto.getLocalBounds());
         const auto box(rectangle->getSize());
         word->texto.setOrigin((bounds.width - box.x) / 2 + bounds.left, (bounds.height - box.y) / 2 + bounds.top);
-    }
-
-    void deleteLastCharacter() {
-        if (word->size < 1) {
-            return;
-        }
-        word->mensaje = word->mensaje.substr(0, --word->size);
-        word->texto.setString(word->mensaje);
-        centerWord();
     }
 
     void mouseEnterEvent(sf::Color newColor, sf::Color newTextColor = sf::Color::Blue) {

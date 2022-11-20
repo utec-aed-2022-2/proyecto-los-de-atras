@@ -101,10 +101,22 @@ map
 -
 button.h
 ../ui/button.h
+input.h
+../ui/input.h
+password.h
+../ui/password.h
 Blockchain.h
 ../ui/Blockchain.h
 utils/unix.h
 ../ui/utils/unix.h
+
+../ui/input.h
+button.h
+../ui/button.h
+
+../ui/password.h
+button.h
+../ui/button.h
 
 ../ui/word.h
 SFML/Graphics.hpp
@@ -136,6 +148,8 @@ cstring
 string
 -
 sstream
+-
+ctime
 -
 
 /home/juan-diego/UTEC/CS2023aed/block-chain/main.cpp

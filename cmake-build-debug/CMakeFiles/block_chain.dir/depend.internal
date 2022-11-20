@@ -13,6 +13,8 @@ CMakeFiles/block_chain.dir/main.cpp.o
  ../functions/hashFunctions.h
  ../ui/button.h
  ../ui/gui.h
+ ../ui/input.h
+ ../ui/password.h
  ../ui/word.h
  ../utils/stoli.h
  ../utils/swap.h
