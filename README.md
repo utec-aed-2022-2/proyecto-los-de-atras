@@ -4,7 +4,7 @@
 
 ## **Miembros**
 - Choqque Mejia, Fernando Adriano
-- Flores Panduro, Carlos Alonso
+- Flores Panduro, Carlos Alonso ASHANINKA
 - Castro Padilla, Juan Diego
 - Izaguirre Zavaleta, Luis Fernando
 
