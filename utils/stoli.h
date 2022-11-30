@@ -6,10 +6,10 @@
 #include <string>
 #include <cmath>
 
-long int stoli(const std::string &__str)
+long int stoli(const std::string &_str)
 {
     long int returnn = 0;
-    for (int i = 0; i < __str.size(); i++) { returnn += stoi(__str.substr(i, 1)) * pow(10,(__str.size()-1)-i); }
+    for (int i = 0; i < _str.size(); i++) { returnn += stoi(_str.substr(i, 1)) * pow(10,(_str.size()-1)-i); }
     return returnn;
 }
 

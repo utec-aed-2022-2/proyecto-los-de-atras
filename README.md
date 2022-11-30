@@ -1,12 +1,4 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=8843467&assignment_repo_type=AssignmentRepo)
-
 # **Blockchain**
-
-## **Miembros**
-- Choqque Mejia, Fernando Adriano
-- Flores Panduro, Carlos Alonso ASHANINKA
-- Castro Padilla, Juan Diego
-- Izaguirre Zavaleta, Luis Fernando
 
 ## **Introducción**
 
@@ -16,7 +8,7 @@ Un Blockchain es una cadena secuencial e inmutable de registros
 llamada Blocks. Pueden contener transacciones, archivos o cualquier dato que desee. Pero 
 lo importante es que están encadenados mediante hashes.
 
-![structures](Utils/img/blockchain.jpg)
+![structures](img/blockchain.jpg)
 
 **¿Qué es SHA256?**
 
@@ -24,7 +16,7 @@ SHA-256 (Secure Hash Algorithm 256) es un algoritmo (o función) cuyo objetivo e
 o códigos únicos con el que se pudieran asegurar documentos o datos informáticos frente a cualquier
 agente externo que desee modificarlos. una de sus características es que la longitud del hash resultante es siempre igual, sin importar lo extenso que sea el contenido que uses para generar el hash (el resultado siempre es una cadena de 64 de letras y números).
 
-![structures](Utils/img/sha256.png)
+![structures](img/sha256.png)
 
 ## **Objetivo**
 
@@ -38,7 +30,7 @@ usando diversas estructuras de datos como mecanismos de indexación para diferen
 
 **3 clases principales** :
 
-![structures](Utils/img/main.png)
+![structures](img/main.png)
 
 * **transaction** :
 
@@ -48,7 +40,7 @@ usando diversas estructuras de datos como mecanismos de indexación para diferen
 
 ## **¿Qué estructuras usamos?**
 
-![structures](Utils/img/structures.jpg)
+![structures](img/structures.jpg)
 
 * **Hash** : Usamos esta estructura para:
     - indexar a los usuarios.
