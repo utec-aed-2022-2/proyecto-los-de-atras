@@ -12,19 +12,19 @@
 
 **¿Qué es Blockchain?**
 
-Un Blockchain es una cadena secuencial e inmutable de registros
-llamada Blocks. Pueden contener transacciones, archivos o cualquier dato que desee. Pero
+Un Blockchain es una cadena secuencial e inmutable de registros 
+llamada Blocks. Pueden contener transacciones, archivos o cualquier dato que desee. Pero 
 lo importante es que están encadenados mediante hashes.
 
-![structures](cmake-build-debug/assets/img/blockchain.jpg)
+![structures](Utils/img/blockchain.jpg)
 
 **¿Qué es SHA256?**
 
-SHA-256 (Secure Hash Algorithm 256) es un algoritmo (o función) cuyo objetivo es generar hashes
+SHA-256 (Secure Hash Algorithm 256) es un algoritmo (o función) cuyo objetivo es generar hashes 
 o códigos únicos con el que se pudieran asegurar documentos o datos informáticos frente a cualquier
-agente externo que desee modificarlos. Una de sus características es que la longitud del hash resultante es siempre igual, sin importar lo extenso que sea el contenido que uses para generar el hash (el resultado siempre es una cadena de 64 de letras y números).
+agente externo que desee modificarlos. una de sus características es que la longitud del hash resultante es siempre igual, sin importar lo extenso que sea el contenido que uses para generar el hash (el resultado siempre es una cadena de 64 de letras y números).
 
-![structures](cmake-build-debug/assets/img/sha256.png)
+![structures](Utils/img/sha256.png)
 
 ## **Objetivo**
 
@@ -38,7 +38,7 @@ usando diversas estructuras de datos como mecanismos de indexación para diferen
 
 **3 clases principales** :
 
-![structures](cmake-build-debug/assets/img/main.png)
+![structures](Utils/img/main.png)
 
 * **transaction** :
 
@@ -48,7 +48,7 @@ usando diversas estructuras de datos como mecanismos de indexación para diferen
 
 ## **¿Qué estructuras usamos?**
 
-![structures](cmake-build-debug/assets/img/structures.jpg)
+![structures](Utils/img/structures.jpg)
 
 * **Hash** : Usamos esta estructura para:
     - indexar a los usuarios.
