@@ -36,7 +36,7 @@ usando diversas estructuras de datos como mecanismos de indexación para diferen
 
 Esta clase acepta los siguientes tipos de datos: string, date y float. Ello se debe a la información que contiene esta clase (sender, receiver, amount y date) y que se puede ver de la siguiente forma en la interfaz gráfica la interfaz gráfica de la siguiente forma:
 
-![structures](Utils/img/transactionUI.jpeg)
+![structures](img/transactionUI.jpeg)
 
 * **block** :
 
