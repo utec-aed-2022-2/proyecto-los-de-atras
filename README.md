@@ -80,10 +80,9 @@ Blockchain::createUser       // O(k), k:=cantidad promedio de valores en cada bu
 Inserta un nuevo usuario en la blockchain, ademas, guarda en un hash
 un puntero al bloque de ese usuario.
 
-Blockchain::setTx            // O(log m (n), m := orden del B+Tree, n := cantidad de elementos en el B+Tree)
+Blockchain::setTx            // O(log m (n)), m := orden del B+Tree, n := cantidad de elementos en el B+Tree
 Inserta una nueva transaccion en la blockchain. Ademas, realiza inserciones
 en cada uno de los indices utilizados (Hash, Heap, B+Tree)
-
 ```
 
 ## **¿Cómo correr el proyecto?**
