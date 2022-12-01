@@ -34,9 +34,17 @@ usando diversas estructuras de datos como mecanismos de indexación para diferen
 
 * **transaction** :
 
+Esta clase acepta los siguientes tipos de datos: string, date y float. Ello se debe a la información que contiene esta clase (sender, receiver, amount y date) y que se puede ver de la siguiente forma en la interfaz gráfica la interfaz gráfica de la siguiente forma:
+
+![structures](Utils/img/transactionUI.jpeg)
+
 * **block** :
 
+Esta clase contiene el id, nonce, prev hash y hash. Los dos primeros son de tipo unsigned long long (tambien conocido como uint64_t).Esta clase contiene el id, nonce, prev hash y hash. Los dos primeros son de tipo unsigned long long (tambien conocido como uint64_t).
+
 * **blockchain** :
+
+En esta clase se registra el usuario y la contraseña (ambos serian strings) para luego poder crear un bloque de transaccion a partir de la clase block. Por lo tanto, también aceptará los mismos tipos de datos de esta última.
 
 ## **¿Qué estructuras usamos?**
 
