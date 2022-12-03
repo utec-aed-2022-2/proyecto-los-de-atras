@@ -108,13 +108,13 @@ int main(int argc, char const *argv[])
     // PARTE 2
 
     std::ofstream adminDate("adminDate.txt");
-    auto a = bch.admiTxDate();
-    for (int i = 0; i < a.SIZE(); i++) { adminDate << a[i] << "\n"; }
+    auto a1 = bch.admiTxDate();
+    for (int i = 0; i < a1.SIZE(); i++) { adminDate << *(a1[i]) << "\n"; }
     adminDate.close();
     
     std::ofstream adminAmount("adminAmount.txt");
-    auto a = bch.admiTxAmount();
-    for (int i = 0; i < a.SIZE(); i++) { adminAmount << a[i] << "\n"; }
+    auto a2 = bch.admiTxAmount();
+    for (int i = 0; i < a2.SIZE(); i++) { adminAmount << *(a2[i]) << "\n"; }
     adminAmount.close();
 
     /*
