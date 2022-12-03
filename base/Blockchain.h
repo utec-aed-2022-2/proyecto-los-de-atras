@@ -29,6 +29,8 @@ public:
     Blockchain() = default;
     ~Blockchain() = default;
 
+    DoubleList<transaction*> admiTxDate();
+    DoubleList<transaction*> admiTxAmount();
     void createUser(const std::string& username, const std::string& password);
     block* myBlock(const std::string& username, const std::string& password);
     DoubleList<transaction*> myTxsDate(const std::string& username, const std::string& password);
@@ -47,6 +49,10 @@ public:
     void mineCascade(const std::string& username, const std::string& password);
     friend std::ostream& operator<<(std::ostream& os, const Blockchain& tx);
 };
+
+DoubleList<transaction*> Blockchain::admiTxDate() { return allOrderByDate.makeList(); }
+
+DoubleList<transaction*> Blockchain::admiTxAmount() { return allOrderByAmount.makeList(); }
 
 void Blockchain::createUser(const std::string& username, const std::string& password)
 {

@@ -2,7 +2,7 @@
 #ifndef SWAP_H
 #define SWAP_H
 #include <iostream>
-#include<functional>
+#include <functional>
 
 template<typename T>
 void swap(T &x, T &y)

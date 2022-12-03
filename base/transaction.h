@@ -5,6 +5,7 @@
 #include <sstream>
 #include <chrono>
 #include "../Utils/stoli.h"
+#include "../Utils/utd.h"
 
 struct transaction
 {
@@ -56,10 +57,7 @@ bool transaction::operator!=(transaction const& other) const { return !(*this ==
 
 std::ostream& operator<<(std::ostream& os, const transaction& tx)
 {
-    std::time_t unixTimestamp(std::stol(tx.date));
-    std::string date = std::asctime(std::localtime(&unixTimestamp));
-
-    os << "(" << tx.string1 << " , " << tx.string2 << ", " << tx.amount << ", " << date.substr(0, 24) << ")";
+    os << "(" << tx.string1 << " , " << tx.string2 << ", " << tx.amount << ", " << unixTimeToHumanReadable(stoli(tx.date)) << ")";
     return os;
 }
 

@@ -154,7 +154,7 @@ int Heap<T, activate>::RIGHT(int index) const { return (2*index + 2); }
 template<typename T, bool activate>
 void Heap<T, activate>::topRangeR(int index, DoubleList<T>& dl)
 {
-    if (equal(A[0], A[index]))
+    if (index < size && equal(A[0], A[index]))
     {
         dl.push_back(A[index]);
         topRangeR(LEFT(index), dl);
